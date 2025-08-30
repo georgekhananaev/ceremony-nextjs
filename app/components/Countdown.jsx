@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import settings from '../config/settings';
 
 export default function Countdown() {
   const [timeLeft, setTimeLeft] = useState({
@@ -13,7 +14,7 @@ export default function Countdown() {
 
   useEffect(() => {
     const calculateTimeLeft = () => {
-      const weddingDate = new Date('2026-03-07T16:00:00').getTime();
+      const weddingDate = new Date(`${settings.wedding.date}T${settings.wedding.ceremony.time}:00`).getTime();
       const now = new Date().getTime();
       const distance = weddingDate - now;
 

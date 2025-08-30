@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import settings from '../config/settings';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -100,7 +101,7 @@ export default function Hero() {
             transition={{ duration: 1.5, delay: 0.3 }}
             className="font-playfair text-[clamp(4rem,12vw,8rem)] font-black leading-[0.9] tracking-[-2px]"
           >
-            <span className="block text-gradient-gold">PATINYA</span>
+            <span className="block text-gradient-gold">{settings.couple.bride.name.toUpperCase()}</span>
             
             <motion.span 
               className="block text-5xl font-light my-8 text-[#ff6b6b] relative"
@@ -115,7 +116,7 @@ export default function Hero() {
               </span>
             </motion.span>
             
-            <span className="block text-gradient-gold">DAR</span>
+            <span className="block text-gradient-gold">{settings.couple.groom.name.toUpperCase()}</span>
           </motion.h1>
         </div>
 
@@ -125,7 +126,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.8 }}
           className="text-lg font-light tracking-[3px] uppercase text-[#87a878]"
         >
-          March 07, 2026
+          {settings.wedding.displayDate}
         </motion.p>
       </div>
 

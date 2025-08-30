@@ -3,38 +3,30 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, MapPin, Sparkles, Calendar } from 'lucide-react';
+import settings from '../config/settings';
 
 export default function LoveStory() {
-  const milestones = [
-    { 
-      date: "May 2021", 
-      title: "First Meeting", 
-      description: "Coffee shop magic in Bangkok",
-      icon: Heart,
-      color: "from-[#ff6b6b] to-[#ffc4c4]"
-    },
-    { 
-      date: "Dec 2021", 
-      title: "First Adventure", 
-      description: "Exploring Chiang Mai together",
-      icon: MapPin,
-      color: "from-[#87a878] to-[#a8c89a]"
-    },
-    { 
-      date: "Feb 2024", 
-      title: "The Proposal", 
-      description: "Under the stars at Koh Samui",
-      icon: Sparkles,
-      color: "from-[#d4af37] to-[#e6c757]"
-    },
-    { 
-      date: "March 2026", 
-      title: "Our Wedding", 
-      description: "Beginning our forever journey",
-      icon: Calendar,
-      color: "from-[#ff6b6b] to-[#d4af37]"
-    }
-  ];
+  const iconMap = {
+    'Heart': Heart,
+    'MapPin': MapPin,
+    'Sparkles': Sparkles,
+    'Calendar': Calendar
+  };
+
+  const colorMap = {
+    'Heart': "from-[#ff6b6b] to-[#ffc4c4]",
+    'MapPin': "from-[#87a878] to-[#a8c89a]",
+    'Sparkles': "from-[#d4af37] to-[#e6c757]",
+    'Calendar': "from-[#ff6b6b] to-[#d4af37]"
+  };
+
+  const milestones = settings.loveStory.map(story => ({
+    date: story.date,
+    title: story.title,
+    description: story.description,
+    icon: iconMap[story.icon] || Heart,
+    color: colorMap[story.icon] || "from-[#ff6b6b] to-[#ffc4c4]"
+  }));
 
   return (
     <section className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a]">

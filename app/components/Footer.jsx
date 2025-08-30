@@ -3,12 +3,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
+import settings from '../config/settings';
 
 export default function Footer() {
+    const { couple, social } = settings;
+    
     const socialLinks = [
-        { name: 'IG', href: '#' },
-        { name: 'FB', href: '#' },
-        { name: '#PD', href: '#' }
+        { name: 'IG', href: `https://instagram.com/${social.instagram.wedding.replace('@', '')}` },
+        { name: 'FB', href: social.facebook.eventPage },
+        { name: social.instagram.hashtag, href: `https://instagram.com/explore/tags/${social.instagram.hashtag.replace('#', '')}` }
     ];
 
     return (
@@ -41,7 +44,7 @@ export default function Footer() {
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.3 }}
                     >
-                        P & D
+                        {settings.couple.bride.name[0]} & {settings.couple.groom.name[0]}
                     </motion.h3>
 
                     {/* Contact Info */}
@@ -49,10 +52,10 @@ export default function Footer() {
                         We can't wait to celebrate with you<br/>
                         For any questions, please contact us at<br/>
                         <a 
-                            href="mailto:hello@patinyaanddar.com" 
+                            href={`mailto:${settings.couple.email}`}
                             className="text-[#d4af37] hover:text-[#ff6b6b] transition-colors duration-300"
                         >
-                            hello@patinyaanddar.com
+                            {settings.couple.email}
                         </a>
                     </p>
 
@@ -89,7 +92,7 @@ export default function Footer() {
                     {/* Copyright and Credits */}
                     <div className="space-y-4">
                         <p className="text-sm text-[#faf8f3] opacity-50">
-                            © 2026 Patinya & Dar. All rights reserved.
+                            © {new Date(settings.wedding.date).getFullYear()} {settings.couple.bride.name} & {settings.couple.groom.name}. All rights reserved.
                         </p>
                         
                         {/* Animated Heart */}

@@ -2,35 +2,43 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, ExternalLink } from 'lucide-react';
+import settings from '../config/settings';
 
 export default function Contact() {
+    const { couple, venue, wedding } = settings;
+    
     const contactInfo = [
         {
             icon: Mail,
             title: "Email",
-            details: ["patinya@wedding.com", "dar@wedding.com"],
+            details: [couple.bride.email, couple.groom.email],
             color: "from-[#ff6b6b] to-[#ffc4c4]"
         },
         {
             icon: Phone,
             title: "Phone",
-            details: ["+66 123 456 789", "+66 987 654 321"],
+            details: [couple.bride.phone, couple.groom.phone],
             color: "from-[#d4af37] to-[#e6c757]"
         },
         {
             icon: MapPin,
             title: "Venue",
-            details: ["The Botanical Loft", "456 Modern Avenue"],
+            details: [venue.name, venue.address.district],
             color: "from-[#87a878] to-[#a8c89a]"
         },
         {
             icon: Clock,
             title: "Timeline",
-            details: ["Ceremony: 4:00 PM", "Reception: 7:00 PM"],
+            details: [
+                `Ceremony: ${wedding.ceremony.displayTime}`,
+                `Reception: ${wedding.reception.displayTime}`
+            ],
             color: "from-[#ff6b6b] to-[#d4af37]"
         }
     ];
+
+    const mapUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.5799!2d${venue.coordinates.lng}!3d${venue.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQ0JzMyLjAiTiAxMDDCsDM0JzMxLjUiRQ!5e0!3m2!1sen!2sth!4v1635835200000!5m2!1sen!2sth`;
 
     return (
         <section className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a]">
@@ -77,7 +85,7 @@ export default function Contact() {
                                 
                                 <div className="space-y-2">
                                     {item.details.map((detail, idx) => (
-                                        <p key={idx} className="text-[#faf8f3] opacity-70 hover:opacity-100 transition-opacity">
+                                        <p key={idx} className="text-[#faf8f3] opacity-70 hover:opacity-100 transition-opacity text-sm">
                                             {detail}
                                         </p>
                                     ))}
@@ -87,21 +95,97 @@ export default function Contact() {
                     })}
                 </div>
 
-                {/* Map Section */}
+                {/* Venue Details & Map */}
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                     viewport={{ once: true }}
-                    className="mt-16 glass p-2 rounded-2xl overflow-hidden"
+                    className="mt-16 grid lg:grid-cols-2 gap-8"
                 >
-                    <div className="aspect-video bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d] rounded-xl flex items-center justify-center">
-                        <div className="text-center">
-                            <MapPin className="w-16 h-16 text-[#d4af37] mx-auto mb-4" />
-                            <p className="text-[#faf8f3] opacity-60">Interactive Map Coming Soon</p>
+                    {/* Venue Information */}
+                    <div className="glass p-8 rounded-2xl">
+                        <h3 className="font-playfair text-3xl font-bold mb-6 text-[#d4af37]">
+                            {venue.name}
+                        </h3>
+                        
+                        <div className="space-y-4 mb-8">
+                            <p className="text-[#faf8f3] opacity-80">
+                                {venue.address.street}<br/>
+                                {venue.address.district}<br/>
+                                {venue.address.city}, {venue.address.postalCode}<br/>
+                                {venue.address.country}
+                            </p>
+                            
+                            <div className="pt-4 border-t border-[#d4af37]/20">
+                                <p className="text-[#faf8f3] opacity-60 mb-2">
+                                    {venue.parking}
+                                </p>
+                                <p className="text-[#faf8f3] opacity-60">
+                                    GPS: {venue.coordinates.lat}, {venue.coordinates.lng}
+                                </p>
+                            </div>
                         </div>
+
+                        <motion.a
+                            href={venue.googleMapsUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-3 border border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-[#1a1a1a] transition-all duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <MapPin className="w-5 h-5" />
+                            Get Directions
+                            <ExternalLink className="w-4 h-4" />
+                        </motion.a>
+                    </div>
+
+                    {/* Google Map */}
+                    <div className="glass p-2 rounded-2xl overflow-hidden">
+                        <iframe
+                            src={mapUrl}
+                            width="100%"
+                            height="400"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            className="rounded-xl"
+                            title="Wedding Venue Location"
+                        ></iframe>
                     </div>
                 </motion.div>
+
+                {/* Accommodation Info */}
+                {venue.accommodation && venue.accommodation.length > 0 && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                        viewport={{ once: true }}
+                        className="mt-16 text-center"
+                    >
+                        <h3 className="font-playfair text-3xl font-bold mb-8 text-[#d4af37]">
+                            Accommodation
+                        </h3>
+                        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                            {venue.accommodation.map((hotel, index) => (
+                                <div key={index} className="glass p-6 rounded-2xl">
+                                    <h4 className="text-xl font-semibold text-[#faf8f3] mb-2">
+                                        {hotel.name}
+                                    </h4>
+                                    <p className="text-[#faf8f3] opacity-60 text-sm">
+                                        {hotel.distance} from venue
+                                    </p>
+                                    <p className="text-[#d4af37] text-sm mt-2">
+                                        Booking Code: {hotel.bookingCode}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
             </div>
         </section>
     );

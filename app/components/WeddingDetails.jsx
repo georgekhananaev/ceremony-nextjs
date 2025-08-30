@@ -2,23 +2,26 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import settings from '../config/settings';
 
 export default function WeddingDetails() {
+  const { wedding, venue, events } = settings;
+  
   const details = [
     {
       number: '01',
-      title: 'The Ceremony',
-      text: '4:00 PM Sharp\nModern Garden Chapel\nDress Code: Modern Formal\nColors: Black, White & Gold'
+      title: events.ceremony.title,
+      text: `${wedding.ceremony.displayTime} Sharp\n${venue.ceremonyLocation}\nDress Code: ${events.ceremony.dressCode}\nColors: ${events.ceremony.colors.join(', ')}`
     },
     {
       number: '02',
       title: 'The Venue',
-      text: 'The Botanical Loft\n456 Modern Avenue\nMetropolitan District\nValet Parking Available'
+      text: `${venue.name}\n${venue.address.street}\n${venue.address.district}\n${venue.parking}`
     },
     {
       number: '03',
-      title: 'The Reception',
-      text: 'Cocktails at 6:00 PM\nDinner at 7:00 PM\nDancing Until Dawn\nOpen Bar All Night'
+      title: events.reception.title,
+      text: `Cocktails at ${wedding.cocktailHour.displayTime}\nDinner at ${wedding.reception.displayTime}\nDancing Until ${wedding.reception.displayEndTime}\n${events.reception.features.join(' • ')}`
     }
   ];
 
