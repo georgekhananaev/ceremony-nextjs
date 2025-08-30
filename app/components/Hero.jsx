@@ -82,17 +82,17 @@ export default function Hero() {
         </motion.div>
 
         {/* Subtle particles */}
-        {[...Array(5)].map((_, i) => (
+        {typeof window !== 'undefined' && [...Array(5)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-[#d4af37] rounded-full opacity-30"
             initial={{ 
-              x: Math.random() * window.innerWidth,
-              y: window.innerHeight + 50
+              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+              y: (typeof window !== 'undefined' ? window.innerHeight : 800) + 50
             }}
             animate={{ 
               y: -50,
-              x: Math.random() * window.innerWidth
+              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000)
             }}
             transition={{ 
               duration: 15 + i * 5,
@@ -142,72 +142,170 @@ export default function Hero() {
             
             {/* Elegant separator */}
             <motion.div 
-              className="flex items-center justify-center my-8 gap-8"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              className="relative flex items-center justify-center my-10"
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: "100%" }}
+              transition={{ duration: 1, delay: 0.8 }}
             >
-              <motion.div 
-                className="flex-1 h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af3750] to-transparent"
-                animate={{ scaleX: [0.8, 1, 0.8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <div className="relative">
-                <motion.span 
-                  className="text-[#ff6b6b] text-3xl font-thin italic font-playfair relative z-10"
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0]
-                  }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  &
-                </motion.span>
-                {/* Pulsing hearts around the ampersand */}
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                >
-                  <div className="absolute w-20 h-20">
-                    {[0, 72, 144, 216, 288].map((rotation, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute top-0 left-1/2 -translate-x-1/2"
-                        style={{ transform: `rotate(${rotation}deg) translateY(-25px)` }}
-                        animate={{ 
-                          opacity: [0.2, 0.6, 0.2],
-                          scale: [0.8, 1.2, 0.8]
-                        }}
-                        transition={{ 
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: i * 0.2,
-                          ease: "easeInOut"
-                        }}
-                      >
-                        <div className="w-2 h-2 bg-[#d4af37] rounded-full blur-[1px]"/>
-                      </motion.div>
-                    ))}
-                  </div>
+              {/* Infinity symbol background */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.15 }}
+                transition={{ duration: 1, delay: 1 }}
+              >
+                <svg width="300" height="100" viewBox="0 0 300 100" className="overflow-visible">
+                  <motion.path
+                    d="M 50 50 Q 100 20, 150 50 T 250 50 Q 200 80, 150 50 T 50 50"
+                    stroke="#d4af37"
+                    strokeWidth="0.5"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  />
+                </svg>
+              </motion.div>
+              
+              {/* Main content */}
+              <div className="relative flex items-center gap-8">
+                {/* Left flourish */}
+                <motion.div className="relative">
+                  <svg width="120" height="40" viewBox="0 0 120 40" className="overflow-visible">
+                    <motion.path
+                      d="M 120 20 Q 60 10, 30 20 T 0 20"
+                      stroke="url(#gradient-left)"
+                      strokeWidth="1"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 1.5, delay: 0.9 }}
+                    />
+                    <defs>
+                      <linearGradient id="gradient-left" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="transparent" />
+                        <stop offset="100%" stopColor="#d4af37" stopOpacity="0.5" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  {/* Floating heart left */}
+                  <motion.div
+                    className="absolute left-10 top-1/2 -translate-y-1/2"
+                    animate={{ 
+                      y: [-10, -15, -10],
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#ff6b6b" opacity="0.3">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                  </motion.div>
                 </motion.div>
-                {/* Glowing ring */}
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                  animate={{ 
-                    scale: [1, 1.3, 1],
-                    opacity: [0.3, 0.1, 0.3]
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <div className="w-16 h-16 border border-[#d4af3730] rounded-full"/>
+
+                {/* Center ampersand with elegant animation */}
+                <motion.div className="relative px-6">
+                  <motion.span 
+                    className="text-[#ff6b6b] text-4xl font-thin italic font-playfair relative z-10 block"
+                    animate={{ 
+                      y: [0, -3, 0],
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    &
+                  </motion.span>
+                  
+                  {/* Elegant circle decoration */}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    initial={{ scale: 0, rotate: 0 }}
+                    animate={{ scale: 1, rotate: 180 }}
+                    transition={{ duration: 1.5, delay: 1 }}
+                  >
+                    <div className="relative w-14 h-14">
+                      {/* Inner circle */}
+                      <motion.div
+                        className="absolute inset-0 rounded-full border border-[#d4af3720]"
+                        animate={{ 
+                          scale: [1, 1.1, 1],
+                          opacity: [0.5, 0.2, 0.5]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      />
+                      {/* Outer dotted circle */}
+                      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 56 56">
+                        <circle
+                          cx="28"
+                          cy="28"
+                          r="26"
+                          fill="none"
+                          stroke="#d4af37"
+                          strokeWidth="0.5"
+                          strokeDasharray="2 4"
+                          opacity="0.3"
+                        />
+                      </svg>
+                    </div>
+                  </motion.div>
+                  
+                  {/* Sparkles */}
+                  {[45, 135, 225, 315].map((angle, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute top-1/2 left-1/2"
+                      style={{
+                        transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(-35px)`
+                      }}
+                      animate={{
+                        opacity: [0, 1, 0],
+                        scale: [0.5, 1, 0.5]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: i * 0.5,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <div className="w-1 h-1 bg-[#d4af37] rounded-full"/>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                {/* Right flourish */}
+                <motion.div className="relative">
+                  <svg width="120" height="40" viewBox="0 0 120 40" className="overflow-visible">
+                    <motion.path
+                      d="M 0 20 Q 60 10, 90 20 T 120 20"
+                      stroke="url(#gradient-right)"
+                      strokeWidth="1"
+                      fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 1.5, delay: 0.9 }}
+                    />
+                    <defs>
+                      <linearGradient id="gradient-right" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#d4af37" stopOpacity="0.5" />
+                        <stop offset="100%" stopColor="transparent" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  {/* Floating heart right */}
+                  <motion.div
+                    className="absolute right-10 top-1/2 -translate-y-1/2"
+                    animate={{ 
+                      y: [-10, -15, -10],
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, delay: 1.5, ease: "easeInOut" }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="#ff6b6b" opacity="0.3">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                  </motion.div>
                 </motion.div>
               </div>
-              <motion.div 
-                className="flex-1 h-[0.5px] bg-gradient-to-l from-transparent via-[#d4af3750] to-transparent"
-                animate={{ scaleX: [0.8, 1, 0.8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
             </motion.div>
             
             {/* Groom name */}
