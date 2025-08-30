@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function FloatingMusicControl() {
   const [isVisible, setIsVisible] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
+  const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -15,77 +15,65 @@ export default function FloatingMusicControl() {
       audioRef.current.loop = true;
       audioRef.current.volume = 0.3;
     }
-  }, []);
+
+    // Listen for custom play music event
+    const handlePlayMusicEvent = () => {
+      setIsVisible(true); // Show the music button
+      if (audioRef.current && !isPlaying) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+          setHasAutoPlayed(true);
+        }).catch(error => {
+          console.log('Audio playback failed:', error);
+        });
+      }
+    };
+
+    window.addEventListener('playBackgroundMusic', handlePlayMusicEvent);
+    
+    return () => {
+      window.removeEventListener('playBackgroundMusic', handlePlayMusicEvent);
+    };
+  }, [isPlaying]);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      if (currentScrollY > 100 && !hasStarted) {
+      // Show the music button when scrolling past 100px
+      if (currentScrollY > 100 && !isVisible) {
         setIsVisible(true);
-        setHasStarted(true);
         
-        // Try to play immediately on scroll
-        if (audioRef.current && !isPlaying) {
+        // Try autoplay only once when first visible
+        if (!hasAutoPlayed && audioRef.current) {
           audioRef.current.play().then(() => {
             setIsPlaying(true);
+            setHasAutoPlayed(true);
           }).catch(error => {
-            console.log('Autoplay on scroll failed:', error);
+            console.log('Autoplay failed, user interaction required:', error);
+            // Set hasAutoPlayed to true even on failure to prevent retry
+            setHasAutoPlayed(true);
           });
         }
-      }
-      
-      // Also try to play if already visible but not playing
-      if (hasStarted && !isPlaying && audioRef.current) {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          // Silently fail, will retry on next scroll
-        });
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Check initial scroll position
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [hasStarted, isPlaying]);
-
-  // Separate effect to handle autoplay
-  useEffect(() => {
-    if (hasStarted && audioRef.current && !isPlaying) {
-      // Try to play immediately
-      const playPromise = audioRef.current.play();
-      
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setIsPlaying(true);
-        }).catch(error => {
-          console.log('Autoplay prevented, user interaction required:', error);
-          // If autoplay fails, we'll play on first user interaction
-          const playOnInteraction = () => {
-            if (audioRef.current && !isPlaying) {
-              audioRef.current.play().then(() => {
-                setIsPlaying(true);
-                document.removeEventListener('click', playOnInteraction);
-                document.removeEventListener('scroll', playOnInteraction);
-                document.removeEventListener('touchstart', playOnInteraction);
-              }).catch(err => console.log('Play failed:', err));
-            }
-          };
-          
-          document.addEventListener('click', playOnInteraction, { once: true });
-          document.addEventListener('scroll', playOnInteraction, { once: true });
-          document.addEventListener('touchstart', playOnInteraction, { once: true });
-        });
-      }
-    }
-  }, [hasStarted, isPlaying]);
+  }, [isVisible, hasAutoPlayed]);
 
   const toggleMusic = () => {
     if (audioRef.current) {
       if (isPlaying) {
+        // Pause the music
         audioRef.current.pause();
         setIsPlaying(false);
       } else {
+        // Play the music
         audioRef.current.play().then(() => {
           setIsPlaying(true);
         }).catch(error => {

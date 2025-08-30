@@ -15,6 +15,11 @@ export default function Countdown() {
   const [isWeddingDay, setIsWeddingDay] = useState(false);
   const [isPastWedding, setIsPastWedding] = useState(false);
 
+  const handleCountdownClick = () => {
+    // Trigger background music to play
+    window.dispatchEvent(new Event('playBackgroundMusic'));
+  };
+
   const scrollToNext = () => {
     const nextSection = document.querySelector('#wedding-details');
     if (nextSection) {
@@ -60,7 +65,7 @@ export default function Countdown() {
   }, []);
 
   return (
-    <section id="countdown" className="min-h-screen flex items-center justify-center py-20 bg-gradient-to-br from-[#faf8f3] via-white to-[#f5f0e8] relative overflow-hidden">
+    <section id="countdown" className="min-h-screen flex items-center justify-center py-20 bg-gradient-to-br from-[#faf8f3] via-white to-[#f5f0e8] relative overflow-hidden" onClick={handleCountdownClick}>
       {/* Animated gradient orbs - lighter */}
       <div className="absolute inset-0">
         <motion.div 

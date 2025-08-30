@@ -21,6 +21,9 @@ export default function Hero() {
   const scrollToNext = () => {
     const element = document.getElementById('countdown');
     element?.scrollIntoView({ behavior: 'smooth' });
+    
+    // Trigger background music to play
+    window.dispatchEvent(new Event('playBackgroundMusic'));
   };
 
   return (
