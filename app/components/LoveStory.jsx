@@ -49,7 +49,7 @@ export default function LoveStory() {
               left: `${(i * 17) % 100}%`,
               top: `${(i * 23) % 100}%`
             }}
-            animate={{ 
+            animate={{
               y: [-20, -120],
               opacity: [0, 1, 0]
             }}
@@ -73,15 +73,15 @@ export default function LoveStory() {
           className="text-center mb-32"
         >
           {/* Decorative Line */}
-          <motion.div 
+          <motion.div
             className="h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent mb-12"
             initial={{ width: 0 }}
             whileInView={{ width: "100%" }}
             transition={{ duration: 1.5, ease: "easeOut" }}
             viewport={{ once: true }}
           />
-          
-          <motion.h2 
+
+          <motion.h2
             className="font-playfair text-[clamp(4rem,10vw,7rem)] font-thin leading-[0.9] tracking-[0.02em]"
             initial={{ y: 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -95,8 +95,8 @@ export default function LoveStory() {
               JOURNEY
             </span>
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             className="mt-8 text-sm font-light tracking-[0.3em] uppercase text-[#faf8f3]/40"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -123,9 +123,9 @@ export default function LoveStory() {
 
         {/* Minimalist Timeline */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Central Golden Thread */}
-          <motion.div 
-            className="absolute left-1/2 transform -translate-x-1/2 w-[0.5px] h-full"
+          {/* Central Golden Thread - Hidden on mobile, visible on desktop */}
+          <motion.div
+            className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-[0.5px] h-full"
             style={{
               background: "linear-gradient(to bottom, transparent, #d4af37, #d4af37, transparent)",
               opacity: 0.2
@@ -141,7 +141,7 @@ export default function LoveStory() {
             {milestones.map((milestone, index) => {
               const isEven = index % 2 === 0;
               const isHovered = hoveredIndex === index;
-              
+
               return (
                 <motion.div
                   key={milestone.id}
@@ -153,18 +153,8 @@ export default function LoveStory() {
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  {/* Date Node */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 z-20 pointer-events-none">
-                    <div className="relative">
-                      {/* Center Dot */}
-                      <div className="relative w-8 h-8 bg-[#0a0a0a] rounded-full flex items-center justify-center border border-[#d4af37]/20">
-                        <div className="w-2 h-2 bg-[#d4af37]/30 rounded-full" />
-                      </div>
-                    </div>
-                  </div>
-
                   {/* Content */}
-                  <motion.div 
+                  <motion.div
                     className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ${
                       isEven ? '' : 'lg:[direction:rtl]'
                     }`}
@@ -176,7 +166,7 @@ export default function LoveStory() {
                     {/* Text Content */}
                     <div className={`${isEven ? 'lg:text-right' : 'lg:text-left lg:[direction:ltr]'} text-center lg:text-inherit`}>
                       <motion.div
-                        animate={{ 
+                        animate={{
                           opacity: isHovered ? 1 : 0.7,
                           y: isHovered ? -5 : 0
                         }}
@@ -186,12 +176,12 @@ export default function LoveStory() {
                         <p className="text-xs tracking-[0.3em] uppercase text-[#d4af37]/50 mb-4">
                           {milestone.date}
                         </p>
-                        
+
                         {/* Title */}
                         <h3 className="font-playfair text-4xl lg:text-5xl font-thin text-[#faf8f3]/90 mb-4 leading-tight">
                           {milestone.title}
                         </h3>
-                        
+
                         {/* Description */}
                         <p className="text-base text-[#faf8f3]/50 font-light leading-relaxed max-w-sm mx-auto lg:mx-0 lg:ml-auto">
                           {milestone.description}
@@ -226,17 +216,17 @@ export default function LoveStory() {
                           {/* Overlay */}
                           <div className={`absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 via-transparent to-transparent transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`} />
                         </div>
-                        
+
                         {/* Border Rings */}
                         <div className={`absolute inset-0 rounded-full border-2 border-[#d4af37]/20 transition-all duration-500 ${isHovered ? 'scale-105 border-[#d4af37]/40' : 'scale-100'}`} />
                         <div className={`absolute inset-2 rounded-full border border-[#faf8f3]/10 transition-all duration-700 ${isHovered ? 'scale-110 opacity-0' : 'scale-100 opacity-100'}`} />
-                        
+
                         {/* Number Overlay (subtle, on top of image) */}
-                        <div className={`absolute inset-0 flex items-end justify-center pb-8 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
-                          <span className="font-playfair text-5xl lg:text-6xl font-thin text-[#faf8f3]/30">
-                            {String(index + 1).padStart(2, '0')}
-                          </span>
-                        </div>
+                        {/*<div className={`absolute inset-0 flex items-end justify-center pb-8 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>*/}
+                        {/*  <span className="font-playfair text-5xl lg:text-6xl font-thin text-[#faf8f3]/30">*/}
+                        {/*    {String(index + 1).padStart(2, '0')}*/}
+                        {/*  </span>*/}
+                        {/*</div>*/}
                       </div>
                     </div>
                   </motion.div>
@@ -257,7 +247,7 @@ export default function LoveStory() {
           <div className="max-w-3xl mx-auto">
             {/* Decorative Elements */}
             <div className="flex items-center justify-center mb-12">
-              <motion.div 
+              <motion.div
                 className="h-[0.5px] w-24 bg-gradient-to-r from-transparent to-[#d4af37]/20"
                 initial={{ width: 0 }}
                 whileInView={{ width: 96 }}
@@ -265,7 +255,7 @@ export default function LoveStory() {
                 viewport={{ once: true }}
               />
               <div className="w-2 h-2 bg-[#d4af37]/20 rounded-full mx-6" />
-              <motion.div 
+              <motion.div
                 className="h-[0.5px] w-24 bg-gradient-to-l from-transparent to-[#d4af37]/20"
                 initial={{ width: 0 }}
                 whileInView={{ width: 96 }}
@@ -273,7 +263,7 @@ export default function LoveStory() {
                 viewport={{ once: true }}
               />
             </div>
-            
+
             {/* Quote */}
             <motion.blockquote
               className="relative"
