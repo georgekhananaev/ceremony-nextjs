@@ -260,7 +260,7 @@ export default function Hero() {
                 {/* Center ampersand with elegant animation */}
                 <motion.div className="relative px-6">
                   <motion.span 
-                    className="text-[#ff6b6b] text-4xl font-thin italic font-playfair relative z-10 block"
+                    className="text-[#d4af37] text-4xl font-thin italic font-playfair relative z-10 block"
                     animate={{ 
                       y: [0, -3, 0],
                     }}

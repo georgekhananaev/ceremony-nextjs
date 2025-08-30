@@ -44,10 +44,11 @@ export default function FloatingMenu() {
   };
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <>
-          {/* Menu Button */}
+    <>
+      <AnimatePresence>
+        {isVisible && (
+          <>
+            {/* Menu Button */}
           <motion.div
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
@@ -194,5 +195,6 @@ export default function FloatingMenu() {
         </>
       )}
     </AnimatePresence>
+    </>
   );
 }
