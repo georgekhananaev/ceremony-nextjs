@@ -2,7 +2,7 @@ import './globals.css'
 import settings from './config/settings'
 
 // Use environment variable if available, otherwise use a default
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://patinyaanddar.com'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ceremony-nextjs.vercel.app'
 
 // Safely create URL object for metadataBase
 let metadataBaseUrl;
@@ -11,7 +11,7 @@ try {
 } catch (error) {
   // Fallback to a valid URL if the siteUrl is invalid
   console.warn('Invalid NEXT_PUBLIC_SITE_URL, using fallback URL');
-  metadataBaseUrl = new URL('https://patinyaanddar.com');
+  metadataBaseUrl = new URL('https://ceremony-nextjs.vercel.app');
 }
 
 export const metadata = {
@@ -32,9 +32,11 @@ export const metadata = {
     images: [
       {
         url: `${siteUrl}/thumbnail.png`,
+        secureUrl: `${siteUrl}/thumbnail.png`,
         width: 1200,
         height: 630,
         alt: `${settings.couple.bride.name} & ${settings.couple.groom.name} Wedding Invitation`,
+        type: 'image/png',
       }
     ],
     locale: 'en_US',
@@ -80,9 +82,9 @@ export const metadata = {
   
   // Icons
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
   },
   
   // Manifest for PWA
@@ -111,6 +113,23 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>{`${settings.couple.bride.name} & ${settings.couple.groom.name} | Wedding - ${settings.wedding.displayDate}`}</title>
+        
+        {/* Open Graph meta tags for better WhatsApp/social media support */}
+        <meta property="og:title" content={`${settings.couple.bride.name} & ${settings.couple.groom.name} are Getting Married!`} />
+        <meta property="og:description" content={`Save the date! Join us for our wedding celebration on ${settings.wedding.displayDate}`} />
+        <meta property="og:image" content={`${siteUrl}/thumbnail.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter Card meta tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${settings.couple.bride.name} & ${settings.couple.groom.name} - ${settings.wedding.displayDate}`} />
+        <meta name="twitter:description" content={`Join us for our wedding celebration at ${settings.venue.name}`} />
+        <meta name="twitter:image" content={`${siteUrl}/thumbnail.png`} />
+        
         {/* Additional structured data for rich snippets */}
         <script
           type="application/ld+json"
