@@ -6,9 +6,11 @@ import settings from '../config/settings';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isClient, setIsClient] = useState(false);
   const controls = useAnimation();
 
   useEffect(() => {
+    setIsClient(true);
     const handleMouseMove = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
@@ -82,26 +84,30 @@ export default function Hero() {
         </motion.div>
 
         {/* Subtle particles */}
-        {typeof window !== 'undefined' && [...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-[#d4af37] rounded-full opacity-30"
-            initial={{ 
-              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-              y: (typeof window !== 'undefined' ? window.innerHeight : 800) + 50
-            }}
-            animate={{ 
-              y: -50,
-              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000)
-            }}
-            transition={{ 
-              duration: 15 + i * 5,
-              repeat: Infinity,
-              delay: i * 2,
-              ease: "linear"
-            }}
-          />
-        ))}
+        {isClient && [...Array(5)].map((_, i) => {
+          const startX = (i * 20 + 10) + '%';
+          const endX = ((i * 20 + 10) + (i % 2 === 0 ? 10 : -10)) + '%';
+          return (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-[#d4af37] rounded-full opacity-30"
+              initial={{ 
+                x: startX,
+                y: '110%'
+              }}
+              animate={{ 
+                y: '-10%',
+                x: endX
+              }}
+              transition={{ 
+                duration: 15 + i * 5,
+                repeat: Infinity,
+                delay: i * 2,
+                ease: "linear"
+              }}
+            />
+          );
+        })}
       </div>
 
       {/* Main Content */}
@@ -143,8 +149,8 @@ export default function Hero() {
             {/* Elegant separator */}
             <motion.div 
               className="relative flex items-center justify-center my-10"
-              initial={{ opacity: 0, width: 0 }}
-              animate={{ opacity: 1, width: "100%" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.8 }}
             >
               {/* Infinity symbol background */}
