@@ -66,13 +66,15 @@ export default function Venue() {
                                 Our Venue
                             </motion.p>
                             <motion.h2 
-                                className="font-playfair text-[clamp(3rem,8vw,6rem)] font-black text-white leading-tight"
+                                className="font-playfair text-[clamp(3rem,8vw,6rem)] font-thin tracking-[0.02em] leading-tight"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 1, delay: 0.5 }}
                                 viewport={{ once: true }}
                             >
-                                {venue.name}
+                                <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
+                                    {venue.name.toUpperCase()}
+                                </span>
                             </motion.h2>
                             <motion.p 
                                 className="text-white/80 text-lg mt-4 max-w-2xl mx-auto px-6"
@@ -104,7 +106,7 @@ export default function Venue() {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid mb-24 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {venueGallery.images.map((image, index) => (
                             <motion.div
                                 key={index}

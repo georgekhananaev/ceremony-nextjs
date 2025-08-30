@@ -50,8 +50,10 @@ export default function Contact() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-black mb-5 text-gradient-gold">
-                        GET IN TOUCH
+                    <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-thin tracking-[0.02em] mb-5">
+                        <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
+                            GET IN TOUCH
+                        </span>
                     </h2>
                     <p className="text-lg font-light tracking-[2px] uppercase opacity-60 text-[#faf8f3]">
                         We'd Love To Hear From You

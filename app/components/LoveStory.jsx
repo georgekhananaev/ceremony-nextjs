@@ -38,8 +38,10 @@ export default function LoveStory() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-black mb-5 text-gradient-gold">
-            OUR LOVE STORY
+          <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-thin tracking-[0.02em] mb-5">
+            <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
+              OUR LOVE STORY
+            </span>
           </h2>
           <p className="text-lg font-light tracking-[2px] uppercase opacity-60 text-[#faf8f3]">
             Every Chapter Led Us Here
@@ -96,7 +98,7 @@ export default function LoveStory() {
                         <span className="inline-block px-3 py-1 bg-[#d4af37]/20 text-[#d4af37] text-sm font-medium rounded-full mb-3">
                           {milestone.date}
                         </span>
-                        <h3 className="text-2xl lg:text-3xl font-playfair font-bold mb-2 text-[#faf8f3]">
+                        <h3 className="text-2xl lg:text-3xl font-playfair font-thin mb-2 text-[#faf8f3]">
                           {milestone.title}
                         </h3>
                         <p className="text-base lg:text-lg opacity-70 leading-relaxed text-[#faf8f3]">

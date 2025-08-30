@@ -35,8 +35,10 @@ export default function WeddingDetails() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-black mb-5">
-            WEDDING DETAILS
+          <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-thin tracking-[0.02em] mb-5">
+            <span className="bg-gradient-to-r from-[#1a1a1a] via-[#d4af37] to-[#1a1a1a] bg-clip-text text-transparent">
+              WEDDING DETAILS
+            </span>
           </h2>
           <p className="text-lg font-light tracking-[2px] uppercase opacity-60">
             Everything You Need To Know

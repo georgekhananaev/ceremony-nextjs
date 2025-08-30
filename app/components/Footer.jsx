@@ -40,11 +40,13 @@ export default function Footer() {
                 >
                     {/* Names */}
                     <motion.h3 
-                        className="font-playfair text-6xl md:text-7xl font-black mb-8 text-gradient-gold"
+                        className="font-playfair text-6xl md:text-7xl font-thin tracking-[0.02em] mb-8"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.3 }}
                     >
-                        {settings.couple.bride.name[0]} & {settings.couple.groom.name[0]}
+                        <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
+                            {settings.couple.bride.name[0].toUpperCase()} & {settings.couple.groom.name[0].toUpperCase()}
+                        </span>
                     </motion.h3>
 
                     {/* Contact Info */}

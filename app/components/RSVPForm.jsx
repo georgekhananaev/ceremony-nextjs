@@ -41,7 +41,11 @@ export default function RSVPForm() {
                     <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-[#87a878] to-[#a8c89a] rounded-full mb-6">
                         <Check className="w-12 h-12 text-white" />
                     </div>
-                    <h2 className="font-playfair text-5xl font-black mb-4 text-[#1a1a1a]">Thank You!</h2>
+                    <h2 className="font-playfair text-5xl font-thin tracking-[0.02em] mb-4">
+                        <span className="bg-gradient-to-r from-[#1a1a1a] via-[#d4af37] to-[#1a1a1a] bg-clip-text text-transparent">
+                            THANK YOU!
+                        </span>
+                    </h2>
                     <p className="text-xl text-[#1a1a1a] opacity-70">
                         Your RSVP has been received. We're so excited to celebrate with you!
                     </p>
@@ -60,8 +64,10 @@ export default function RSVPForm() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-black mb-5">
-                        RSVP
+                    <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-thin tracking-[0.02em] mb-5">
+                        <span className="bg-gradient-to-r from-[#1a1a1a] via-[#d4af37] to-[#1a1a1a] bg-clip-text text-transparent">
+                            RSVP
+                        </span>
                     </h2>
                     <p className="text-lg font-light tracking-[2px] uppercase opacity-60">
                         We Hope You Can Join Us
