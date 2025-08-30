@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
   --primary: #1a1a1a;
@@ -18,7 +17,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  @apply font-inter;
   background: var(--primary);
   color: var(--cream);
   overflow-x: hidden;
@@ -102,14 +101,7 @@ body {
   75% { transform: translateY(-5px) translateX(10px); }
 }
 
-/* Elegant Typography */
-.font-playfair {
-  font-family: 'Playfair Display', serif;
-}
-
-.font-inter {
-  font-family: 'Inter', sans-serif;
-}
+/* Typography utilities already handled by Tailwind config */
 
 /* Gold Gradient Text */
 .text-gradient-gold {

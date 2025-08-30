@@ -34,7 +34,17 @@ const settings = {
     },
     fonts: {
       heading: 'Playfair Display',
-      body: 'Inter'
+      body: 'Inter',
+      script: 'Dancing Script',
+      // Font weights
+      weights: {
+        thin: 100,
+        light: 300,
+        regular: 400,
+        medium: 500,
+        semibold: 600,
+        bold: 700
+      }
     }
   },
 

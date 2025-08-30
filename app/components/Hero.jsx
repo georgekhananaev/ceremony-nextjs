@@ -187,7 +187,7 @@ export default function Hero() {
           >
             {/* Bride name */}
             <motion.h1
-              className="font-playfair text-[clamp(3rem,10vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
+              className="font-playfair text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.4 }}
@@ -367,7 +367,7 @@ export default function Hero() {
             
             {/* Groom name */}
             <motion.h1
-              className="font-playfair text-[clamp(3rem,10vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
+              className="font-playfair text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.6 }}

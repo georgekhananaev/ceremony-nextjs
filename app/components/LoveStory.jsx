@@ -272,7 +272,7 @@ export default function LoveStory() {
               transition={{ duration: 1, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              <p className="font-playfair text-3xl lg:text-4xl font-thin italic text-[#faf8f3]/70 leading-relaxed">
+              <p className="font-playfair text-2xl lg:text-3xl font-thin italic text-[#faf8f3]/70 leading-relaxed">
                 "In all the world, there is no heart for me like yours.
                 <span className="block mt-2">In all the world, there is no love for you like mine."</span>
               </p>

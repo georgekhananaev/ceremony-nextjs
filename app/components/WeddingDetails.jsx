@@ -300,7 +300,6 @@ export default function WeddingDetails() {
                       transition={{ delay: 0.3 }}
                       viewport={{ once: true }}
                     >
-                      <MapPin className="w-5 h-5 text-[#d4af37]" />
                       <span className="text-sm font-medium tracking-wider text-[#d4af37]/80 uppercase">
                         Full Address
                       </span>
@@ -322,9 +321,7 @@ export default function WeddingDetails() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        <MapPin className="w-4 h-4" />
                         View on Map
-                        <ChevronRight className="w-4 h-4" />
                       </motion.a>
                       
                       {mounted && (
@@ -336,7 +333,6 @@ export default function WeddingDetails() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
-                          <CalendarPlus className="w-4 h-4" />
                           Add to Calendar
                         </motion.a>
                       )}
@@ -445,7 +441,6 @@ export default function WeddingDetails() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Icon className="w-4 h-4" />
                     <span className="text-sm font-medium tracking-wider uppercase">
                       {tab.title}
                     </span>
@@ -471,16 +466,16 @@ export default function WeddingDetails() {
                         {detailTabs[activeTab].content.title}
                       </h3>
                       <div className="space-y-4">
-                        <div className="flex items-center gap-3">
-                          <Clock className="w-4 h-4 text-[#d4af37]/60" />
+                        <div className="flex items-start gap-3">
+                          <span className="text-[#d4af37]/60">•</span>
                           <span className="text-[#faf8f3]/70">{detailTabs[activeTab].content.time}</span>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <MapPin className="w-4 h-4 text-[#d4af37]/60" />
+                        <div className="flex items-start gap-3">
+                          <span className="text-[#d4af37]/60">•</span>
                           <span className="text-[#faf8f3]/70">{detailTabs[activeTab].content.location}</span>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <Calendar className="w-4 h-4 text-[#d4af37]/60" />
+                        <div className="flex items-start gap-3">
+                          <span className="text-[#d4af37]/60">•</span>
                           <span className="text-[#faf8f3]/70">{detailTabs[activeTab].content.duration}</span>
                         </div>
                       </div>
@@ -516,8 +511,8 @@ export default function WeddingDetails() {
             </h3>
             
             <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-[0.5px] h-full bg-gradient-to-b from-transparent via-[#d4af37]/30 to-transparent" />
+              {/* Timeline Line - hidden on mobile */}
+              <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-[0.5px] h-full bg-gradient-to-b from-transparent via-[#d4af37]/30 to-transparent" />
               
               {/* Timeline Items */}
               <div className="space-y-12">
@@ -560,7 +555,7 @@ export default function WeddingDetails() {
                         transition={{ duration: 0.5 }}
                       >
                         <div className="w-12 h-12 bg-[#0a0a0a] rounded-full flex items-center justify-center border-2 border-[#d4af37]/30">
-                          <Icon className="w-5 h-5 text-[#d4af37]" />
+                          <span className="text-[#d4af37] text-xs font-bold">{index + 1}</span>
                         </div>
                       </motion.div>
                       
@@ -582,7 +577,6 @@ export default function WeddingDetails() {
             className="mt-24 text-center"
           >
             <div className="inline-block bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-              <Camera className="w-8 h-8 text-[#d4af37] mx-auto mb-4" />
               <p className="text-sm tracking-wider text-[#faf8f3]/60 uppercase mb-2">
                 Share Your Moments
               </p>

@@ -1,5 +1,25 @@
 import './globals.css'
 import settings from './config/settings'
+import { Inter, Playfair_Display, Dancing_Script } from 'next/font/google'
+
+// Configure fonts with Next.js font optimization
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+})
+
+const dancing = Dancing_Script({ 
+  subsets: ['latin'],
+  variable: '--font-dancing',
+  display: 'swap',
+})
 
 // Use environment variable if available, otherwise use a default
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ceremony-nextjs.vercel.app'
@@ -107,7 +127,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${dancing.variable}`}>
       <head>
         <title>{`${settings.couple.bride.name} & ${settings.couple.groom.name} | Wedding - ${settings.wedding.displayDate}`}</title>
         

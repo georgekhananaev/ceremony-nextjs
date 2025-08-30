@@ -10,7 +10,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'script': ['Dancing Script', 'cursive'],
+        'playfair': ['var(--font-playfair)', 'Playfair Display', 'serif'],
+        'inter': ['var(--font-inter)', 'Inter', 'sans-serif'],
+        'script': ['var(--font-dancing)', 'Dancing Script', 'cursive'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
