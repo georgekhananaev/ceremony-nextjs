@@ -90,6 +90,18 @@ body {
   100% { background-position: 1000px 0; }
 }
 
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.3; filter: blur(20px); }
+  50% { opacity: 0.6; filter: blur(30px); }
+}
+
+@keyframes floatSmooth {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-10px) translateX(5px); }
+  50% { transform: translateY(5px) translateX(-5px); }
+  75% { transform: translateY(-5px) translateX(10px); }
+}
+
 /* Elegant Typography */
 .font-playfair {
   font-family: 'Playfair Display', serif;

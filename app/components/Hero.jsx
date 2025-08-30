@@ -1,11 +1,12 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import settings from '../config/settings';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const controls = useAnimation();
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -21,126 +22,250 @@ export default function Hero() {
   };
 
   return (
-    <div className="h-screen relative flex items-center justify-center bg-gradient-to-b from-[#1a1a1a] to-[#2d2d2d] overflow-hidden">
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div 
-          className="absolute w-[200%] h-[200%] top-[-50%] left-[-50%]"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 20% 80%, #ff6b6b 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, #ffc4c4 0%, transparent 50%),
-              radial-gradient(circle at 40% 60%, #87a878 0%, transparent 30%)
-            `,
-            animation: 'float 20s ease-in-out infinite'
-          }}
+    <div className="h-screen relative flex items-center justify-center overflow-hidden">
+      {/* Elegant Gradient Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0f0f0f]"/>
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#d4af3710] via-transparent to-[#ff6b6b08]"/>
+      </div>
+
+      {/* Animated Light Beams */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute w-[150%] h-[1px] bg-gradient-to-r from-transparent via-[#d4af3730] to-transparent"
+          initial={{ x: '-150%', y: '100vh', rotate: -45 }}
+          animate={{ x: '150%', y: '-100vh' }}
+          transition={{ duration: 8, repeat: Infinity, repeatDelay: 3, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute w-[150%] h-[1px] bg-gradient-to-r from-transparent via-[#ff6b6b20] to-transparent"
+          initial={{ x: '150%', y: '100vh', rotate: 45 }}
+          animate={{ x: '-150%', y: '-100vh' }}
+          transition={{ duration: 10, repeat: Infinity, repeatDelay: 5, ease: "linear" }}
         />
       </div>
 
-      {/* Floating Modern Flowers */}
+      {/* Elegant Floating Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <motion.div 
-          className="absolute top-[10%] left-[10%] w-16 h-16 opacity-30"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        {/* Large background circle */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2"
           style={{
-            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
+            background: 'radial-gradient(circle, rgba(212,175,55,0.03) 0%, transparent 70%)',
+            transform: `translate(-50%, -50%) translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px)`
           }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
+        />
+        
+        {/* Elegant floating orbs */}
+        <motion.div
+          className="absolute top-[15%] right-[10%] w-32 h-32"
+          animate={{ 
+            y: [0, -30, 0],
+            x: [0, 20, 0],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >
-          <svg viewBox="0 0 100 100">
-            <path d="M50 10 Q30 30 20 50 Q30 70 50 90 Q70 70 80 50 Q70 30 50 10" fill="#ff6b6b" opacity="0.3"/>
-          </svg>
+          <div className="w-full h-full rounded-full bg-gradient-to-br from-[#d4af3715] to-transparent blur-xl"/>
         </motion.div>
         
-        <motion.div 
-          className="absolute top-[60%] right-[15%] w-20 h-20 opacity-30"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          style={{
-            transform: `translate(${mousePosition.x * -0.03}px, ${mousePosition.y * -0.03}px)`
+        <motion.div
+          className="absolute bottom-[20%] left-[5%] w-40 h-40"
+          animate={{ 
+            y: [0, 40, 0],
+            x: [0, -30, 0],
           }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         >
-          <svg viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="5" fill="#d4af37"/>
-            <circle cx="50" cy="30" r="12" fill="#ffc4c4" opacity="0.5"/>
-            <circle cx="30" cy="50" r="12" fill="#ffc4c4" opacity="0.5"/>
-            <circle cx="70" cy="50" r="12" fill="#ffc4c4" opacity="0.5"/>
-            <circle cx="50" cy="70" r="12" fill="#ffc4c4" opacity="0.5"/>
-          </svg>
+          <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#ff6b6b10] to-transparent blur-2xl"/>
         </motion.div>
-        
-        <motion.div 
-          className="absolute bottom-[20%] left-[20%] w-24 h-24 opacity-30"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          style={{
-            transform: `translate(${mousePosition.x * 0.04}px, ${mousePosition.y * 0.04}px)`
-          }}
-        >
-          <svg viewBox="0 0 100 100">
-            <polygon points="50,10 60,40 90,40 65,60 75,90 50,70 25,90 35,60 10,40 40,40" fill="#87a878" opacity="0.3"/>
-          </svg>
-        </motion.div>
+
+        {/* Subtle particles */}
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-[#d4af37] rounded-full opacity-30"
+            initial={{ 
+              x: Math.random() * window.innerWidth,
+              y: window.innerHeight + 50
+            }}
+            animate={{ 
+              y: -50,
+              x: Math.random() * window.innerWidth
+            }}
+            transition={{ 
+              duration: 15 + i * 5,
+              repeat: Infinity,
+              delay: i * 2,
+              ease: "linear"
+            }}
+          />
+        ))}
       </div>
 
       {/* Main Content */}
-      <div className="text-center z-10 relative px-6">
+      <div className="text-center z-10 relative px-6 max-w-6xl mx-auto">
+        {/* Elegant date badge */}
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-sm tracking-[4px] text-[#d4af37] mb-8 font-medium"
+          transition={{ duration: 0.8 }}
+          className="inline-flex items-center gap-4 mb-12"
         >
-          SAVE THE DATE
+          <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#d4af37]"/>
+          <span className="text-xs tracking-[4px] text-[#d4af37] font-light uppercase">
+            {settings.wedding.displayDate}
+          </span>
+          <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#d4af37]"/>
         </motion.div>
 
-        <div className="relative mb-8">
-          <motion.h1
+        {/* Names with elegant styling */}
+        <div className="relative">
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, delay: 0.3 }}
-            className="font-playfair text-[clamp(4rem,12vw,8rem)] font-black leading-[0.9] tracking-[-2px]"
+            transition={{ duration: 1, delay: 0.2 }}
+            className="relative"
           >
-            <span className="block text-gradient-gold">{settings.couple.bride.name.toUpperCase()}</span>
-            
-            <motion.span 
-              className="block text-5xl font-light my-8 text-[#ff6b6b] relative"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 1, delay: 0.8 }}
+            {/* Bride name */}
+            <motion.h1
+              className="font-playfair text-[clamp(3rem,10vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.4 }}
             >
-              <span className="relative inline-block">
-                &
-                <span className="absolute left-[-100px] top-1/2 transform -translate-y-1/2 w-20 h-[1px] bg-[#d4af37]"></span>
-                <span className="absolute right-[-100px] top-1/2 transform -translate-y-1/2 w-20 h-[1px] bg-[#d4af37]"></span>
+              <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
+                {settings.couple.bride.name.toUpperCase()}
               </span>
-            </motion.span>
+            </motion.h1>
             
-            <span className="block text-gradient-gold">{settings.couple.groom.name.toUpperCase()}</span>
-          </motion.h1>
-        </div>
+            {/* Elegant separator */}
+            <motion.div 
+              className="flex items-center justify-center my-8 gap-8"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              <motion.div 
+                className="flex-1 h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af3750] to-transparent"
+                animate={{ scaleX: [0.8, 1, 0.8] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <div className="relative">
+                <motion.span 
+                  className="text-[#ff6b6b] text-3xl font-thin italic font-playfair relative z-10"
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0]
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  &
+                </motion.span>
+                {/* Pulsing hearts around the ampersand */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                >
+                  <div className="absolute w-20 h-20">
+                    {[0, 72, 144, 216, 288].map((rotation, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute top-0 left-1/2 -translate-x-1/2"
+                        style={{ transform: `rotate(${rotation}deg) translateY(-25px)` }}
+                        animate={{ 
+                          opacity: [0.2, 0.6, 0.2],
+                          scale: [0.8, 1.2, 0.8]
+                        }}
+                        transition={{ 
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                          ease: "easeInOut"
+                        }}
+                      >
+                        <div className="w-2 h-2 bg-[#d4af37] rounded-full blur-[1px]"/>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+                {/* Glowing ring */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                  animate={{ 
+                    scale: [1, 1.3, 1],
+                    opacity: [0.3, 0.1, 0.3]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <div className="w-16 h-16 border border-[#d4af3730] rounded-full"/>
+                </motion.div>
+              </div>
+              <motion.div 
+                className="flex-1 h-[0.5px] bg-gradient-to-l from-transparent via-[#d4af3750] to-transparent"
+                animate={{ scaleX: [0.8, 1, 0.8] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+            
+            {/* Groom name */}
+            <motion.h1
+              className="font-playfair text-[clamp(3rem,10vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.6 }}
+            >
+              <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
+                {settings.couple.groom.name.toUpperCase()}
+              </span>
+            </motion.h1>
+          </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="text-lg font-light tracking-[3px] uppercase text-[#87a878]"
-        >
-          {settings.wedding.displayDate}
-        </motion.p>
+          {/* Subtitle */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="mt-12 space-y-2"
+          >
+            <p className="text-sm tracking-[3px] uppercase text-[#87a878] font-light">
+              Are Getting Married
+            </p>
+            {settings.venue?.name && (
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-8 h-[0.5px] bg-[#87a87850]"/>
+                <p className="text-xs tracking-[2px] uppercase text-[#d4af3770]">
+                  {settings.venue.name}
+                </p>
+                <div className="w-8 h-[0.5px] bg-[#87a87850]"/>
+              </div>
+            )}
+          </motion.div>
+        </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Enhanced Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group"
         onClick={scrollToNext}
       >
-        <span className="text-xs tracking-[2px] uppercase text-[#d4af37]">Scroll</span>
-        <div className="w-[1px] h-10 bg-[#d4af37] relative overflow-hidden">
-          <div className="absolute w-full h-5 bg-[#ff6b6b] animate-scrollDown"></div>
+        <div className="flex flex-col items-center gap-3">
+          <motion.div
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-[30px] h-[50px] border border-[#d4af3750] rounded-full flex items-start justify-center p-2 group-hover:border-[#d4af37] transition-colors"
+          >
+            <motion.div
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-1 h-2 bg-[#d4af37] rounded-full"
+            />
+          </motion.div>
         </div>
       </motion.div>
     </div>

@@ -34,7 +34,7 @@ export default function Venue() {
 
     return (
         <>
-            <section className="min-h-screen py-20 bg-[#faf8f3] relative overflow-hidden">
+            <section className="min-h-screen bg-[#faf8f3] relative overflow-hidden">
                 {/* Hero Banner with Wide Image */}
                 <div className="relative h-[60vh] mb-20">
                     <div className="absolute inset-0">
