@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, MapPin, Calendar, Music, Utensils, Camera, Heart, Users, Sparkles, ChevronRight, ChevronLeft, Palette, Gift, X } from 'lucide-react';
+import { Clock, MapPin, Calendar, Music, Utensils, Camera, Heart, Users, Sparkles, ChevronRight, ChevronLeft, Palette, Gift, X, CalendarPlus } from 'lucide-react';
 import Image from 'next/image';
 import settings from '../config/settings';
 
@@ -11,6 +11,39 @@ export default function WeddingDetails() {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [calendarUrl, setCalendarUrl] = useState('#');
+  const [mounted, setMounted] = useState(false);
+  
+  // Generate Google Calendar URL on client side only
+  React.useEffect(() => {
+    setMounted(true);
+    const startDate = new Date(`${wedding.date}T${wedding.ceremony.time}:00`);
+    const endDate = new Date(`${wedding.date}T${wedding.reception.endTime}:00`);
+    
+    // Format dates for Google Calendar (YYYYMMDDTHHmmss)
+    const formatDate = (date) => {
+      return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    };
+    
+    const eventDetails = {
+      text: `${settings.couple.bride.name} & ${settings.couple.groom.name}'s Wedding`,
+      dates: `${formatDate(startDate)}/${formatDate(endDate)}`,
+      details: `Join us for our wedding celebration!\n\nCeremony: ${wedding.ceremony.displayTime}\nReception: ${wedding.reception.displayTime}\n\nDress Code: ${events.ceremony.dressCode}\n\nWedding Website: ${window.location.origin}`,
+      location: `${venue.name}, ${venue.address.street}, ${venue.address.district}, ${venue.address.city}, ${venue.address.country}`,
+      ctz: 'Asia/Bangkok' // Adjust timezone as needed
+    };
+    
+    const baseUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
+    const params = new URLSearchParams({
+      text: eventDetails.text,
+      dates: eventDetails.dates,
+      details: eventDetails.details,
+      location: eventDetails.location,
+      ctz: eventDetails.ctz
+    });
+    
+    setCalendarUrl(`${baseUrl}&${params.toString()}`);
+  }, []);
   
   // Lightbox functions
   const openLightbox = (index) => {
@@ -287,18 +320,34 @@ export default function WeddingDetails() {
                       <p className="text-sm mt-6 text-[#d4af37]/60">{venue.parking}</p>
                     </div>
 
-                    <motion.a
-                      href={venue.googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mt-8 px-6 py-3 border border-[#d4af37]/50 text-[#d4af37] hover:bg-[#d4af37] hover:text-[#0a0a0a] transition-all duration-300 rounded-full"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <MapPin className="w-4 h-4" />
-                      View on Map
-                      <ChevronRight className="w-4 h-4" />
-                    </motion.a>
+                    <div className="flex flex-wrap gap-4 mt-8">
+                      <motion.a
+                        href={venue.googleMapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-6 py-3 border border-[#d4af37]/50 text-[#d4af37] hover:bg-[#d4af37] hover:text-[#0a0a0a] transition-all duration-300 rounded-full"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <MapPin className="w-4 h-4" />
+                        View on Map
+                        <ChevronRight className="w-4 h-4" />
+                      </motion.a>
+                      
+                      {mounted && (
+                        <motion.a
+                          href={calendarUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-6 py-3 border border-[#d4af37]/50 text-[#d4af37] hover:bg-[#d4af37] hover:text-[#0a0a0a] transition-all duration-300 rounded-full"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <CalendarPlus className="w-4 h-4" />
+                          Add to Calendar
+                        </motion.a>
+                      )}
+                    </div>
                   </div>
 
                   <div className="relative">
@@ -309,7 +358,7 @@ export default function WeddingDetails() {
                     >
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 to-transparent z-10" />
                       <img 
-                        src={venue.imageUrl || "/botanical-house-bkk/1.jpg"} 
+                        src={venue.imageUrl || "/botanical-house-bkk/1.jpg"}
                         alt={venue.name}
                         className="w-full h-full object-cover"
                       />

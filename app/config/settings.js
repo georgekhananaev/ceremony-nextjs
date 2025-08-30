@@ -167,7 +167,7 @@ const settings = {
     heroImage: "/botanical-house-bkk/wide_bh.png",
     images: [
       {
-        url: "/botanical-house-bkk/1.jpg",
+        url: "/botanical-house-bkk/5.jpg",
         alt: "The Botanical House Bangkok - Garden View",
         caption: "Beautiful garden entrance"
       },
