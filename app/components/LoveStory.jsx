@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import settings from '../config/settings';
@@ -8,9 +8,14 @@ import { usePerformance } from '../../hooks/usePerformance';
 
 export default function LoveStory() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [mounted, setMounted] = useState(false);
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.3]);
   const performance = usePerformance();
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   // Map images to milestones
   const imageMap = {
@@ -42,7 +47,7 @@ export default function LoveStory() {
       </div>
 
       {/* Floating Particles - reduced based on performance */}
-      {performance.particleCount > 0 && (
+      {mounted && performance.particleCount > 0 && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(Math.min(performance.particleCount, 20))].map((_, i) => (
             <motion.div
@@ -111,7 +116,7 @@ export default function LoveStory() {
           </motion.p>
 
           {/* Scroll Indicator - simplified for mobile */}
-          {performance.animationLevel !== 'none' && (
+          {mounted && performance.animationLevel !== 'none' && (
             <motion.div
               className="mt-16 flex justify-center"
               initial={{ opacity: 0 }}
@@ -130,7 +135,7 @@ export default function LoveStory() {
         {/* Minimalist Timeline */}
         <div className="relative max-w-4xl mx-auto">
           {/* Central Golden Thread - Hidden on mobile, visible on desktop */}
-          {performance.animationLevel !== 'none' && (
+          {mounted && performance.animationLevel !== 'none' && (
             <motion.div
               className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-[0.5px] h-full"
               style={{
@@ -196,7 +201,7 @@ export default function LoveStory() {
                         </p>
 
                         {/* Decorative Element */}
-                        {performance.animationLevel !== 'none' && (
+                        {mounted && performance.animationLevel !== 'none' && (
                           <div className={`mt-6 flex ${isEven ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
                             <motion.div
                               className="h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af37]/20 to-transparent"
@@ -219,7 +224,7 @@ export default function LoveStory() {
                               src={milestone.image}
                               alt={milestone.title}
                               fill
-                              className={`object-cover transition-all ${performance.animationLevel === 'full' ? 'duration-700' : 'duration-0'} ${performance.animationLevel === 'full' && isHovered ? 'scale-110' : 'scale-100'}`}
+                              className={`object-cover transition-all ${mounted && performance.animationLevel === 'full' ? 'duration-700' : 'duration-0'} ${mounted && performance.animationLevel === 'full' && isHovered ? 'scale-110' : 'scale-100'}`}
                               sizes="(max-width: 768px) 256px, 320px"
                             />
                           )}
@@ -228,8 +233,8 @@ export default function LoveStory() {
                         </div>
 
                         {/* Border Rings */}
-                        <div className={`absolute inset-0 rounded-full border-2 border-[#d4af37]/20 transition-all ${performance.animationLevel === 'full' ? 'duration-500' : 'duration-0'} ${performance.animationLevel === 'full' && isHovered ? 'scale-105 border-[#d4af37]/40' : 'scale-100'}`} />
-                        <div className={`absolute inset-2 rounded-full border border-[#faf8f3]/10 transition-all ${performance.animationLevel === 'full' ? 'duration-700' : 'duration-0'} ${performance.animationLevel === 'full' && isHovered ? 'scale-110 opacity-0' : 'scale-100 opacity-100'}`} />
+                        <div className={`absolute inset-0 rounded-full border-2 border-[#d4af37]/20 transition-all ${mounted && performance.animationLevel === 'full' ? 'duration-500' : 'duration-0'} ${mounted && performance.animationLevel === 'full' && isHovered ? 'scale-105 border-[#d4af37]/40' : 'scale-100'}`} />
+                        <div className={`absolute inset-2 rounded-full border border-[#faf8f3]/10 transition-all ${mounted && performance.animationLevel === 'full' ? 'duration-700' : 'duration-0'} ${mounted && performance.animationLevel === 'full' && isHovered ? 'scale-110 opacity-0' : 'scale-100 opacity-100'}`} />
 
                         {/* Number Overlay (subtle, on top of image) */}
                         {/*<div className={`absolute inset-0 flex items-end justify-center pb-8 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>*/}

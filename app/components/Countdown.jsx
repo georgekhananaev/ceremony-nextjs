@@ -70,7 +70,7 @@ export default function Countdown() {
     <section id="countdown" className="min-h-screen flex items-center justify-center py-20 bg-gradient-to-br from-[#faf8f3] via-white to-[#f5f0e8] relative overflow-hidden" onClick={handleCountdownClick}>
       {/* Animated gradient orbs - lighter */}
       <div className="absolute inset-0">
-        {performance.animationLevel !== 'none' && (
+        {mounted && performance.animationLevel !== 'none' && (
           <motion.div 
             className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#f4e4a1]/20 via-[#ffd700]/10 to-transparent rounded-full blur-3xl will-change-transform"
             animate={performance.animationLevel === 'full' ? {
@@ -84,7 +84,7 @@ export default function Countdown() {
             } : {}}
           />
         )}
-        {performance.animationLevel !== 'none' && (
+        {mounted && performance.animationLevel !== 'none' && (
           <motion.div 
             className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#ffb6c1]/15 via-[#ffc0cb]/10 to-transparent rounded-full blur-3xl will-change-transform"
             animate={performance.animationLevel === 'full' ? {
@@ -98,7 +98,7 @@ export default function Countdown() {
             } : {}}
           />
         )}
-        {performance.animationLevel !== 'none' && (
+        {mounted && performance.animationLevel !== 'none' && (
           <motion.div 
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-[#ffe4b5]/15 to-[#ffd700]/10 rounded-full blur-3xl will-change-transform"
             animate={performance.animationLevel === 'full' ? {
@@ -154,7 +154,7 @@ export default function Countdown() {
         })}
 
         {/* Floating small hearts - reduced based on performance */}
-        {performance.particleCount > 0 && [...Array(Math.min(performance.particleCount, 15))].map((_, i) => {
+        {mounted && performance.particleCount > 0 && [...Array(Math.min(performance.particleCount, 15))].map((_, i) => {
           const heartColors = [
             'text-[#ffb6c1]/35',  // light pink
             'text-[#ff9999]/30',  // light coral
@@ -250,7 +250,7 @@ export default function Countdown() {
             transition={{ duration: 1.2 }}
             viewport={{ once: true }}
           >
-            <span className="text-[#1a1a1a]">
+            <span className="text-[#1a1a1a] uppercase">
               Save The Date
             </span>
           </motion.h2>
@@ -297,7 +297,7 @@ export default function Countdown() {
                         transition={{ duration: 0.3 }}
                         className="relative"
                       >
-                        <span className="font-playfair text-[clamp(5rem,12vw,8rem)] leading-none text-[#1a1a1a] font-thin">
+                        <span className="font-playfair text-[clamp(7rem,12vw,8rem)] leading-none text-[#1a1a1a] font-thin">
                           {String(timeLeft.days).padStart(2, '0')}
                         </span>
                         <span className="absolute -top-2 -right-6 text-xs tracking-[0.2em] uppercase text-[#d4af37]">

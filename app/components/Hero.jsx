@@ -50,7 +50,7 @@ export default function Hero() {
       </div>
 
       {/* Animated Light Beams - only on desktop with good performance */}
-      {performance.animationLevel === 'full' && (
+      {isClient && performance.animationLevel === 'full' && (
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
             className="absolute w-[150%] h-[1px] bg-gradient-to-r from-transparent via-[#d4af3730] to-transparent will-change-transform"
@@ -70,49 +70,49 @@ export default function Hero() {
       {/* Elegant Floating Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Large background circle - simplified for mobile */}
-        {performance.animationLevel !== 'none' && (
+        {isClient && performance.animationLevel !== 'none' && (
           <motion.div
             className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 will-change-transform"
             style={{
               background: 'radial-gradient(circle, rgba(212,175,55,0.03) 0%, transparent 70%)',
-              transform: performance.animationLevel === 'full' 
+              transform: isClient && performance.animationLevel === 'full' 
                 ? `translate(-50%, -50%) translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px)`
                 : 'translate(-50%, -50%)'
             }}
-            animate={performance.animationLevel === 'full' ? { rotate: 360 } : {}}
-            transition={performance.animationLevel === 'full' ? { duration: 100, repeat: Infinity, ease: "linear" } : {}}
+            animate={isClient && performance.animationLevel === 'full' ? { rotate: 360 } : {}}
+            transition={isClient && performance.animationLevel === 'full' ? { duration: 100, repeat: Infinity, ease: "linear" } : {}}
           />
         )}
         
         {/* Elegant floating orbs - reduced for mobile */}
-        {(performance.animationLevel === 'full' || performance.animationLevel === 'moderate') && (
+        {isClient && (performance.animationLevel === 'full' || performance.animationLevel === 'moderate') && (
           <motion.div
             className="absolute top-[15%] right-[10%] w-32 h-32 will-change-transform"
-            animate={performance.animationLevel === 'full' ? { 
+            animate={isClient && performance.animationLevel === 'full' ? { 
               y: [0, -30, 0],
               x: [0, 20, 0],
             } : {}}
-            transition={performance.animationLevel === 'full' ? { duration: 8, repeat: Infinity, ease: "easeInOut" } : {}}
+            transition={isClient && performance.animationLevel === 'full' ? { duration: 8, repeat: Infinity, ease: "easeInOut" } : {}}
           >
             <div className="w-full h-full rounded-full bg-gradient-to-br from-[#d4af3720] to-transparent blur-xl"/>
           </motion.div>
         )}
         
-        {(performance.animationLevel === 'full' || performance.animationLevel === 'moderate') && (
+        {isClient && (performance.animationLevel === 'full' || performance.animationLevel === 'moderate') && (
           <motion.div
             className="absolute bottom-[20%] left-[5%] w-40 h-40 will-change-transform"
-            animate={performance.animationLevel === 'full' ? { 
+            animate={isClient && performance.animationLevel === 'full' ? { 
               y: [0, 40, 0],
               x: [0, -30, 0],
             } : {}}
-            transition={performance.animationLevel === 'full' ? { duration: 10, repeat: Infinity, ease: "easeInOut" } : {}}
+            transition={isClient && performance.animationLevel === 'full' ? { duration: 10, repeat: Infinity, ease: "easeInOut" } : {}}
           >
             <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#ff6b6b15] to-transparent blur-2xl"/>
           </motion.div>
         )}
 
         {/* Additional floating orbs - only show on desktop */}
-        {performance.animationLevel === 'full' && (
+        {isClient && performance.animationLevel === 'full' && (
           <>
             <motion.div
               className="absolute top-[60%] right-[25%] w-48 h-48 will-change-transform"
@@ -189,7 +189,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: performance.animationLevel === 'none' ? 0 : 0.8 }}
+          transition={{ duration: isClient && performance.animationLevel === 'none' ? 0 : 0.8 }}
           className="inline-flex items-center gap-4 mb-8 md:mb-12"
         >
           <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#d4af37]"/>
@@ -204,15 +204,15 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: performance.animationLevel === 'none' ? 0 : 1, delay: performance.animationLevel === 'none' ? 0 : 0.2 }}
+            transition={{ duration: isClient && performance.animationLevel === 'none' ? 0 : 1, delay: isClient && performance.animationLevel === 'none' ? 0 : 0.2 }}
             className="relative"
           >
             {/* Bride name */}
             <motion.h1
               className="font-playfair text-[clamp(2.5rem,12vw,7rem)] md:text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
-              initial={{ opacity: 0, x: performance.animationLevel === 'none' ? 0 : -50 }}
+              initial={{ opacity: 0, x: isClient && performance.animationLevel === 'none' ? 0 : -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: performance.animationLevel === 'none' ? 0 : 1, delay: performance.animationLevel === 'none' ? 0 : 0.4 }}
+              transition={{ duration: isClient && performance.animationLevel === 'none' ? 0 : 1, delay: isClient && performance.animationLevel === 'none' ? 0 : 0.4 }}
             >
               <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
                 {settings.couple.bride.name.toUpperCase()}
@@ -286,10 +286,10 @@ export default function Hero() {
                 <motion.div className="relative px-6">
                   <motion.span 
                     className="text-[#d4af37] text-4xl font-thin italic font-playfair relative z-10 block"
-                    animate={performance.animationLevel === 'full' ? { 
+                    animate={isClient && performance.animationLevel === 'full' ? { 
                       y: [0, -3, 0],
                     } : {}}
-                    transition={performance.animationLevel === 'full' ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : {}}
+                    transition={isClient && performance.animationLevel === 'full' ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : {}}
                   >
                     &
                   </motion.span>
@@ -305,11 +305,11 @@ export default function Hero() {
                       {/* Inner circle */}
                       <motion.div
                         className="absolute inset-0 rounded-full border border-[#d4af3720]"
-                        animate={performance.animationLevel === 'full' ? { 
+                        animate={isClient && performance.animationLevel === 'full' ? { 
                           scale: [1, 1.1, 1],
                           opacity: [0.5, 0.2, 0.5]
                         } : {}}
-                        transition={performance.animationLevel === 'full' ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : {}}
+                        transition={isClient && performance.animationLevel === 'full' ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : {}}
                       />
                       {/* Outer dotted circle */}
                       <svg className="absolute inset-0 w-full h-full" viewBox="0 0 56 56">
@@ -328,7 +328,7 @@ export default function Hero() {
                   </motion.div>
                   
                   {/* Sparkles - only on desktop */}
-                  {performance.animationLevel === 'full' && [45, 135, 225, 315].map((angle, i) => (
+                  {isClient && performance.animationLevel === 'full' && [45, 135, 225, 315].map((angle, i) => (
                     <motion.div
                       key={i}
                       className="absolute top-1/2 left-1/2 will-change-transform"
@@ -390,9 +390,9 @@ export default function Hero() {
             {/* Groom name */}
             <motion.h1
               className="font-playfair text-[clamp(2.5rem,12vw,7rem)] md:text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
-              initial={{ opacity: 0, x: performance.animationLevel === 'none' ? 0 : 50 }}
+              initial={{ opacity: 0, x: isClient && performance.animationLevel === 'none' ? 0 : 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: performance.animationLevel === 'none' ? 0 : 1, delay: performance.animationLevel === 'none' ? 0 : 0.6 }}
+              transition={{ duration: isClient && performance.animationLevel === 'none' ? 0 : 1, delay: isClient && performance.animationLevel === 'none' ? 0 : 0.6 }}
             >
               <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
                 {settings.couple.groom.name.toUpperCase()}

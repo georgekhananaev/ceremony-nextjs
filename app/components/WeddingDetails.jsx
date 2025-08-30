@@ -178,7 +178,7 @@ export default function WeddingDetails() {
         </div>
 
         {/* Floating Particles - reduced based on performance */}
-        {performance.particleCount > 0 && (
+        {mounted && performance.particleCount > 0 && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(Math.min(performance.particleCount, 15))].map((_, i) => (
               <motion.div

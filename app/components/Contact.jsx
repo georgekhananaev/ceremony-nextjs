@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, ExternalLink } from 'lucide-react';
 import settings from '../config/settings';
@@ -9,6 +9,11 @@ import { usePerformance } from '../../hooks/usePerformance';
 export default function Contact() {
     const { couple, venue, wedding } = settings;
     const performance = usePerformance();
+    const [mounted, setMounted] = useState(false);
+    
+    useEffect(() => {
+        setMounted(true);
+    }, []);
     
     const contactInfo = [
         {
@@ -54,7 +59,7 @@ export default function Contact() {
             </div>
 
             {/* Floating Particles - reduced based on performance */}
-            {performance.particleCount > 0 && (
+            {mounted && performance.particleCount > 0 && (
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     {[...Array(Math.min(performance.particleCount, 20))].map((_, i) => (
                         <motion.div
