@@ -5,6 +5,7 @@ import { motion, useAnimation } from 'framer-motion';
 import settings from '../config/settings';
 import { usePerformance } from '../../hooks/usePerformance';
 import { throttle } from '../../utils/performance';
+import { smoothScrollTo, initSmoothScroll } from '../../utils/smoothScroll';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -14,6 +15,9 @@ export default function Hero() {
 
   useEffect(() => {
     setIsClient(true);
+    
+    // Initialize smooth scroll optimizations
+    initSmoothScroll();
     
     // Only track mouse on desktop with good performance
     if (!performance.isMobile && performance.animationLevel === 'full') {
@@ -27,11 +31,13 @@ export default function Hero() {
   }, [performance]);
 
   const scrollToNext = () => {
-    const element = document.getElementById('countdown');
-    element?.scrollIntoView({ behavior: 'smooth' });
-    
-    // Trigger background music to play
-    window.dispatchEvent(new Event('playBackgroundMusic'));
+    smoothScrollTo('countdown', {
+      duration: 800,
+      callback: () => {
+        // Trigger background music to play after scroll completes
+        window.dispatchEvent(new Event('playBackgroundMusic'));
+      }
+    });
   };
 
   return (
@@ -209,7 +215,7 @@ export default function Hero() {
           >
             {/* Bride name */}
             <motion.h1
-              className="font-playfair text-[clamp(2.5rem,12vw,7rem)] md:text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
+              className="font-playfair text-[clamp(5.5rem,12vw,7rem)] md:text-[clamp(5rem,15vw,8rem)] font-thin tracking-[0.02em] leading-[1.1]"
               initial={{ opacity: 0, x: isClient && performance.animationLevel === 'none' ? 0 : -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: isClient && performance.animationLevel === 'none' ? 0 : 1, delay: isClient && performance.animationLevel === 'none' ? 0 : 0.4 }}
@@ -389,7 +395,7 @@ export default function Hero() {
             
             {/* Groom name */}
             <motion.h1
-              className="font-playfair text-[clamp(2.5rem,12vw,7rem)] md:text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
+              className="font-playfair text-[clamp(5.5rem,12vw,7rem)] md:text-[clamp(5rem,15vw,8rem)] font-thin tracking-[0.02em] leading-[1.1]"
               initial={{ opacity: 0, x: isClient && performance.animationLevel === 'none' ? 0 : 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: isClient && performance.animationLevel === 'none' ? 0 : 1, delay: isClient && performance.animationLevel === 'none' ? 0 : 0.6 }}

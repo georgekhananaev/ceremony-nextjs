@@ -16,7 +16,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Disabled to prevent conflicts with JS smooth scroll */
 }
 
 body {

@@ -1,0 +1,21 @@
+{
+  "name": "Patinya & Dar's Wedding",
+  "short_name": "P&D Wedding",
+  "description": "Join Patinya and Dar for their wedding celebration at The Botanical House Bangkok on March 07, 2026",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#d4af37",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "events"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

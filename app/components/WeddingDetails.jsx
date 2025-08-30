@@ -575,7 +575,7 @@ export default function WeddingDetails() {
               <p className="text-sm tracking-wider text-[#faf8f3]/60 uppercase mb-2">
                 Share Your Moments
               </p>
-              <p className="font-playfair text-3xl text-[#d4af37]">
+              <p className="font-playfair text-2xl text-[#d4af37]">
                 {social.instagram.hashtag}
               </p>
             </div>

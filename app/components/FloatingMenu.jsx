@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Heart, Calendar, Users, Camera, Mail, MapPin } from 'lucide-react';
 import settings from '../config/settings';
+import { smoothScrollTo } from '../../utils/smoothScroll';
 
 export default function FloatingMenu() {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,21 +27,20 @@ export default function FloatingMenu() {
   }, [hasBeenShown]);
 
   const menuItems = [
-    { name: 'Home', href: '#hero', icon: Heart },
-    { name: 'Countdown', href: '#countdown', icon: Calendar },
-    { name: 'Details', href: '#wedding-details', icon: MapPin },
-    { name: 'Our Story', href: '#love-story', icon: Heart },
-    { name: 'Gallery', href: '#gallery', icon: Camera },
-    { name: 'Contact', href: '#contact', icon: Users },
-    { name: 'RSVP', href: '#rsvp', icon: Mail },
+    { name: 'Home', href: 'hero', icon: Heart },
+    { name: 'Countdown', href: 'countdown', icon: Calendar },
+    { name: 'Details', href: 'wedding-details', icon: MapPin },
+    { name: 'Our Story', href: 'love-story', icon: Heart },
+    { name: 'Gallery', href: 'gallery', icon: Camera },
+    { name: 'Contact', href: 'contact', icon: Users },
+    { name: 'RSVP', href: 'rsvp', icon: Mail },
   ];
 
   const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsOpen(false);
-    }
+    smoothScrollTo(href, { 
+      duration: 800,
+      callback: () => setIsOpen(false)
+    });
   };
 
   return (

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import settings from '../config/settings';
 import { usePerformance } from '../../hooks/usePerformance';
+import { smoothScrollTo } from '../../utils/smoothScroll';
 
 export default function Countdown() {
   const [timeLeft, setTimeLeft] = useState({
@@ -23,10 +24,7 @@ export default function Countdown() {
   };
 
   const scrollToNext = () => {
-    const nextSection = document.querySelector('#wedding-details');
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    smoothScrollTo('wedding-details', { duration: 800 });
   };
 
   useEffect(() => {
@@ -311,7 +309,7 @@ export default function Countdown() {
                   <div className="hidden lg:block text-4xl text-[#d4af37]/30 font-thin">:</div>
 
                   {/* Hours, Minutes, Seconds - Smaller */}
-                  <div className="flex items-center gap-4 lg:gap-6">
+                  <div className="flex items-center gap-3 lg:gap-4">
                     {[
                       { value: timeLeft.hours, label: 'hours' },
                       { value: timeLeft.minutes, label: 'minutes' },
@@ -471,7 +469,7 @@ export default function Countdown() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mt-20"
+          className="text-center mt-8"
         >
           <motion.p 
             className="font-playfair text-lg lg:text-xl italic text-[#1a1a1a]/50"
