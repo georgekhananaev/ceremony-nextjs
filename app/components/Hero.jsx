@@ -35,7 +35,7 @@ export default function Hero() {
   };
 
   return (
-    <div id="hero" className="h-screen relative flex items-center justify-center overflow-hidden">
+    <div id="hero" className="h-screen relative flex items-start md:items-center justify-center overflow-hidden pt-20 md:pt-0">
       {/* Elegant Gradient Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0f0f0f]"/>
@@ -184,13 +184,13 @@ export default function Hero() {
       </div>
 
       {/* Main Content */}
-      <div className="text-center z-10 relative px-6 max-w-6xl mx-auto">
+      <div className="text-center z-10 relative px-6 max-w-6xl mx-auto mt-8 md:mt-0">
         {/* Elegant date badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: performance.animationLevel === 'none' ? 0 : 0.8 }}
-          className="inline-flex items-center gap-4 mb-12"
+          className="inline-flex items-center gap-4 mb-8 md:mb-12"
         >
           <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#d4af37]"/>
           <span className="text-xs tracking-[4px] text-[#d4af37] font-light uppercase">
@@ -209,7 +209,7 @@ export default function Hero() {
           >
             {/* Bride name */}
             <motion.h1
-              className="font-playfair text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
+              className="font-playfair text-[clamp(2.5rem,12vw,7rem)] md:text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
               initial={{ opacity: 0, x: performance.animationLevel === 'none' ? 0 : -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: performance.animationLevel === 'none' ? 0 : 1, delay: performance.animationLevel === 'none' ? 0 : 0.4 }}
@@ -221,7 +221,7 @@ export default function Hero() {
             
             {/* Elegant separator */}
             <motion.div 
-              className="relative flex items-center justify-center my-10"
+              className="relative flex items-center justify-center my-6 md:my-10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.8 }}
@@ -389,7 +389,7 @@ export default function Hero() {
             
             {/* Groom name */}
             <motion.h1
-              className="font-playfair text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
+              className="font-playfair text-[clamp(2.5rem,12vw,7rem)] md:text-[clamp(3rem,14vw,7rem)] font-thin tracking-[0.02em] leading-[1.1]"
               initial={{ opacity: 0, x: performance.animationLevel === 'none' ? 0 : 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: performance.animationLevel === 'none' ? 0 : 1, delay: performance.animationLevel === 'none' ? 0 : 0.6 }}
@@ -405,7 +405,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.2 }}
-            className="mt-12 space-y-2"
+            className="mt-8 md:mt-12 space-y-2"
           >
             <p className="text-sm tracking-[3px] uppercase text-[#87a878] font-light">
               Are Getting Married
@@ -428,7 +428,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 cursor-pointer group"
+        className="absolute bottom-36 md:bottom-32 left-1/2 transform -translate-x-1/2 cursor-pointer group"
         onClick={scrollToNext}
       >
         <div className="flex flex-col items-center gap-3">
