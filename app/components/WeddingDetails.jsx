@@ -608,18 +608,18 @@ export default function WeddingDetails() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#1a1a1a]/95 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-[#1a1a1a]/95 z-[200] flex items-center justify-center p-4"
             onClick={closeLightbox}
           >
             <button
-              className="absolute top-4 right-4 text-white hover:text-[#d4af37] transition-colors"
+              className="absolute top-4 right-4 text-white hover:text-[#d4af37] transition-colors z-[210]"
               onClick={closeLightbox}
             >
               <X className="w-8 h-8" />
             </button>
 
             <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] transition-colors"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] transition-colors z-[210]"
               onClick={(e) => {
                 e.stopPropagation();
                 goToPrevious();
@@ -629,7 +629,7 @@ export default function WeddingDetails() {
             </button>
 
             <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] transition-colors z-[210]"
               onClick={(e) => {
                 e.stopPropagation();
                 goToNext();
@@ -656,7 +656,7 @@ export default function WeddingDetails() {
               </div>
             </motion.div>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-[210]">
               {venueGallery.images.map((_, index) => (
                 <button
                   key={index}
