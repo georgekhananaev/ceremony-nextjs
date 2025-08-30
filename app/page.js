@@ -3,7 +3,6 @@
 import Hero from './components/Hero'
 import Countdown from './components/Countdown'
 import WeddingDetails from './components/WeddingDetails'
-import Venue from './components/Venue'
 import LoveStory from './components/LoveStory'
 import Gallery from './components/Gallery'
 import RSVPForm from './components/RSVPForm'
@@ -18,7 +17,6 @@ export default function Home() {
       <WeddingDetails />
       <LoveStory />
       <Gallery />
-      <Venue />
       <Contact />
       <RSVPForm />
       <Footer />
