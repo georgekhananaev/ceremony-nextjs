@@ -55,7 +55,7 @@ export default function RSVPForm() {
     }
 
     return (
-        <section className="min-h-screen flex items-center justify-center py-20 bg-[#faf8f3] text-[#1a1a1a]">
+        <section id="rsvp" className="min-h-screen flex items-center justify-center py-20 bg-[#faf8f3] text-[#1a1a1a]">
             <div className="max-w-2xl w-full mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}

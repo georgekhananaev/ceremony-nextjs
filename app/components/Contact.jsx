@@ -41,7 +41,7 @@ export default function Contact() {
     const mapUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.5799!2d${venue.coordinates.lng}!3d${venue.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQ0JzMyLjAiTiAxMDDCsDM0JzMxLjUiRQ!5e0!3m2!1sen!2sth!4v1635835200000!5m2!1sen!2sth`;
 
     return (
-        <section className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a] relative overflow-hidden">
+        <section id="contact" className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a] relative overflow-hidden">
             {/* Elegant Gradient Mesh Background - same as Hero */}
             <div className="absolute inset-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0f0f0f]"/>
