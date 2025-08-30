@@ -157,35 +157,6 @@ export default function Contact() {
                     </div>
                 </motion.div>
 
-                {/* Accommodation Info */}
-                {venue.accommodation && venue.accommodation.length > 0 && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.6 }}
-                        viewport={{ once: true }}
-                        className="mt-16 text-center"
-                    >
-                        <h3 className="font-playfair text-3xl font-bold mb-8 text-[#d4af37]">
-                            Accommodation
-                        </h3>
-                        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                            {venue.accommodation.map((hotel, index) => (
-                                <div key={index} className="glass p-6 rounded-2xl">
-                                    <h4 className="text-xl font-semibold text-[#faf8f3] mb-2">
-                                        {hotel.name}
-                                    </h4>
-                                    <p className="text-[#faf8f3] opacity-60 text-sm">
-                                        {hotel.distance} from venue
-                                    </p>
-                                    <p className="text-[#d4af37] text-sm mt-2">
-                                        Booking Code: {hotel.bookingCode}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
             </div>
         </section>
     );

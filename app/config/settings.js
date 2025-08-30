@@ -31,13 +31,13 @@ const settings = {
     shortDate: "03.07.26",
     day: "Saturday",
     ceremony: {
-      time: "16:00", // 24-hour format
-      displayTime: "4:00 PM",
+      time: "17:30", // 24-hour format
+      displayTime: "5:30 PM",
       duration: "1 hour"
     },
     cocktailHour: {
-      time: "17:30",
-      displayTime: "5:30 PM"
+      time: "18:30",
+      displayTime: "6:30 PM"
     },
     reception: {
       time: "19:00",
@@ -161,6 +161,28 @@ const settings = {
       caption: "Celebration time"
     }
   ],
+
+  // Venue Gallery Images
+  venueGallery: {
+    heroImage: "/botanical-house-bkk/wide_bh.png",
+    images: [
+      {
+        url: "/botanical-house-bkk/1.jpg",
+        alt: "The Botanical House Bangkok - Garden View",
+        caption: "Beautiful garden entrance"
+      },
+      {
+        url: "/botanical-house-bkk/3.jpg",
+        alt: "The Botanical House Bangkok - Ceremony Space",
+        caption: "Garden chapel area"
+      },
+      {
+        url: "/botanical-house-bkk/4.jpg",
+        alt: "The Botanical House Bangkok - Reception Setup",
+        caption: "Evening reception setting"
+      }
+    ]
+  },
 
   // Social Media
   social: {
