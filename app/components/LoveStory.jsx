@@ -1,253 +1,295 @@
 'use client'
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, MapPin, Sparkles, Calendar, ChevronDown, Clock, Quote } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
 import settings from '../config/settings';
 
 export default function LoveStory() {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const { scrollYProgress } = useScroll();
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.3]);
   
-  const iconMap = {
-    'Heart': Heart,
-    'MapPin': MapPin,
-    'Sparkles': Sparkles,
-    'Calendar': Calendar
+  // Map images to milestones
+  const imageMap = {
+    0: '/love-story/coffe.webp',
+    1: '/love-story/first_adventure.webp',
+    2: '/love-story/proposal.webp',
+    3: '/love-story/wedding.webp'
   };
-
-  const gradientMap = {
-    'Heart': "from-rose-500 via-pink-500 to-red-400",
-    'MapPin': "from-emerald-500 via-teal-500 to-cyan-500",
-    'Sparkles': "from-amber-400 via-yellow-400 to-orange-400",
-    'Calendar': "from-violet-500 via-purple-500 to-indigo-500"
-  };
-
-  const backgroundPatterns = {
-    'Heart': "radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%)",
-    'MapPin': "radial-gradient(circle at 80% 50%, rgba(135, 168, 120, 0.1) 0%, transparent 50%)",
-    'Sparkles': "radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%)",
-    'Calendar': "radial-gradient(circle at 50% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%)"
-  };
-
+  
   const milestones = settings.loveStory.map((story, idx) => ({
     ...story,
-    icon: iconMap[story.icon] || Heart,
-    gradient: gradientMap[story.icon] || gradientMap['Heart'],
-    pattern: backgroundPatterns[story.icon] || backgroundPatterns['Heart'],
-    id: idx
+    id: idx,
+    image: imageMap[idx]
   }));
 
   return (
-    <section className="min-h-screen py-32 bg-gradient-to-b from-[#1a1a1a] via-[#0a0a0a] to-[#1a1a1a] relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-rose-500/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-500/5 to-pink-500/5 rounded-full blur-3xl animate-pulse delay-2000" />
+    <section className="min-h-screen py-40 bg-[#0a0a0a] relative overflow-hidden">
+      {/* Elegant Gradient Background - Same as Hero */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0f0f0f]"/>
+        {/* Multiple gradient overlays for better distribution */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#d4af3715] via-transparent to-[#ff6b6b10]"/>
+        <div className="absolute inset-0 bg-gradient-to-bl from-[#87a87810] via-transparent to-transparent"/>
+        <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-[#d4af3708] to-[#faf8f305]"/>
+        {/* Radial gradients for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(212,175,55,0.1)_0%,_transparent_40%)]"/>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(255,107,107,0.08)_0%,_transparent_40%)]"/>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(135,168,120,0.05)_0%,_transparent_60%)]"/>
+      </div>
+
+      {/* Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full"
+            style={{
+              left: `${(i * 17) % 100}%`,
+              top: `${(i * 23) % 100}%`
+            }}
+            animate={{ 
+              y: [-20, -120],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 10 + (i % 3) * 5,
+              repeat: Infinity,
+              delay: i * 0.5,
+              ease: "linear"
+            }}
+          />
+        ))}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Header Section */}
+        {/* Elegant Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mb-24"
+          className="text-center mb-32"
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+          {/* Decorative Line */}
+          <motion.div 
+            className="h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent mb-12"
+            initial={{ width: 0 }}
+            whileInView={{ width: "100%" }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="inline-block mb-6"
-          >
-            <Quote className="w-12 h-12 text-[#d4af37] opacity-50" />
-          </motion.div>
+          />
           
-          <h2 className="font-playfair text-[clamp(3.5rem,9vw,6rem)] font-thin leading-tight mb-6">
-            <motion.span 
-              className="inline-block bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent"
-              initial={{ backgroundPosition: "0% 50%" }}
-              animate={{ backgroundPosition: "100% 50%" }}
-              transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
-              style={{ backgroundSize: "200% 200%" }}
-            >
-              Our Journey
-            </motion.span>
-          </h2>
+          <motion.h2 
+            className="font-playfair text-[clamp(4rem,10vw,7rem)] font-thin leading-[0.9] tracking-[0.02em]"
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.2, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <span className="block bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
+              OUR
+            </span>
+            <span className="block bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent mt-2">
+              JOURNEY
+            </span>
+          </motion.h2>
           
           <motion.p 
-            className="text-xl font-light tracking-[3px] uppercase text-[#d4af37]/70"
-            initial={{ letterSpacing: "0px", opacity: 0 }}
-            whileInView={{ letterSpacing: "3px", opacity: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            className="mt-8 text-sm font-light tracking-[0.3em] uppercase text-[#faf8f3]/40"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
             viewport={{ once: true }}
           >
-            Every Moment Led Us Here
+            A Collection of Moments
           </motion.p>
+
+          {/* Scroll Indicator */}
+          <motion.div
+            className="mt-16 flex justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5 }}
+          >
+            <motion.div
+              className="w-px h-12 bg-gradient-to-b from-[#d4af37]/30 to-transparent"
+              animate={{ scaleY: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </motion.div>
         </motion.div>
 
-        {/* Modern Card Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
-          {milestones.map((milestone, index) => {
-            const Icon = milestone.icon;
-            const isActive = activeIndex === milestone.id;
-            
-            return (
-              <motion.div
-                key={milestone.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.8, 
-                  delay: index * 0.15,
-                  ease: "easeOut"
-                }}
-                viewport={{ once: true }}
-                className="relative group"
-                onMouseEnter={() => setActiveIndex(milestone.id)}
-                onMouseLeave={() => setActiveIndex(null)}
-              >
-                {/* Card Container */}
+        {/* Minimalist Timeline */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Central Golden Thread */}
+          <motion.div 
+            className="absolute left-1/2 transform -translate-x-1/2 w-[0.5px] h-full"
+            style={{
+              background: "linear-gradient(to bottom, transparent, #d4af37, #d4af37, transparent)",
+              opacity: 0.2
+            }}
+            initial={{ height: 0 }}
+            whileInView={{ height: "100%" }}
+            transition={{ duration: 2, ease: "easeOut" }}
+            viewport={{ once: true }}
+          />
+
+          {/* Milestone Cards */}
+          <div className="space-y-32">
+            {milestones.map((milestone, index) => {
+              const isEven = index % 2 === 0;
+              const isHovered = hoveredIndex === index;
+              
+              return (
                 <motion.div
-                  className="relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500"
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ background: milestone.pattern }}
+                  key={milestone.id}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  className="relative"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  {/* Gradient Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${milestone.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                  
+                  {/* Date Node */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 z-20 pointer-events-none">
+                    <div className="relative">
+                      {/* Center Dot */}
+                      <div className="relative w-8 h-8 bg-[#0a0a0a] rounded-full flex items-center justify-center border border-[#d4af37]/20">
+                        <div className="w-2 h-2 bg-[#d4af37]/30 rounded-full" />
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Content */}
-                  <div className="relative p-8 lg:p-10">
-                    {/* Date Badge */}
-                    <motion.div 
-                      className="flex items-center gap-3 mb-6"
-                      initial={{ x: -20, opacity: 0 }}
-                      whileInView={{ x: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.2 + 0.3 }}
-                      viewport={{ once: true }}
-                    >
-                      <Clock className="w-4 h-4 text-[#d4af37]/60" />
-                      <span className="text-sm font-medium tracking-wider text-[#d4af37]/80 uppercase">
-                        {milestone.date}
-                      </span>
-                    </motion.div>
-
-                    {/* Icon and Title Row */}
-                    <div className="flex items-start gap-4 mb-4">
+                  <motion.div 
+                    className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ${
+                      isEven ? '' : 'lg:[direction:rtl]'
+                    }`}
+                    initial={{ x: isEven ? -50 : 50, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.2 }}
+                    viewport={{ once: true }}
+                  >
+                    {/* Text Content */}
+                    <div className={`${isEven ? 'lg:text-right' : 'lg:text-left lg:[direction:ltr]'} text-center lg:text-inherit`}>
                       <motion.div
-                        className={`relative flex-shrink-0`}
-                        whileHover={{ rotate: 360, scale: 1.1 }}
-                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                        animate={{ 
+                          opacity: isHovered ? 1 : 0.7,
+                          y: isHovered ? -5 : 0
+                        }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <div className={`absolute inset-0 bg-gradient-to-br ${milestone.gradient} rounded-2xl blur-xl opacity-50 group-hover:opacity-80 transition-opacity duration-500`} />
-                        <div className={`relative w-16 h-16 bg-gradient-to-br ${milestone.gradient} rounded-2xl flex items-center justify-center shadow-2xl`}>
-                          <Icon className="w-8 h-8 text-white" />
-                        </div>
-                      </motion.div>
-
-                      <div className="flex-1">
-                        <h3 className="text-3xl font-playfair font-light text-[#faf8f3] mb-3 group-hover:text-[#d4af37] transition-colors duration-300">
+                        {/* Date */}
+                        <p className="text-xs tracking-[0.3em] uppercase text-[#d4af37]/50 mb-4">
+                          {milestone.date}
+                        </p>
+                        
+                        {/* Title */}
+                        <h3 className="font-playfair text-4xl lg:text-5xl font-thin text-[#faf8f3]/90 mb-4 leading-tight">
                           {milestone.title}
                         </h3>
                         
-                        <AnimatePresence>
-                          <motion.p 
-                            className="text-lg text-[#faf8f3]/70 leading-relaxed"
-                            initial={{ height: "auto" }}
-                            animate={{ height: isActive ? "auto" : "auto" }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            {milestone.description}
-                          </motion.p>
-                        </AnimatePresence>
-                      </div>
+                        {/* Description */}
+                        <p className="text-base text-[#faf8f3]/50 font-light leading-relaxed max-w-sm mx-auto lg:mx-0 lg:ml-auto">
+                          {milestone.description}
+                        </p>
+
+                        {/* Decorative Element */}
+                        <div className={`mt-6 flex ${isEven ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
+                          <motion.div
+                            className="h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af37]/20 to-transparent"
+                            initial={{ width: 0 }}
+                            animate={{ width: isHovered ? 100 : 50 }}
+                            transition={{ duration: 0.5 }}
+                          />
+                        </div>
+                      </motion.div>
                     </div>
 
-                    {/* Decorative Elements */}
-                    <motion.div
-                      className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500"
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Sparkles className="w-6 h-6 text-[#d4af37]" />
-                    </motion.div>
-
-                    {/* Progress Bar */}
-                    <motion.div 
-                      className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"
-                      initial={{ scaleX: 0 }}
-                      whileInView={{ scaleX: 1 }}
-                      transition={{ duration: 1, delay: index * 0.2 + 0.5 }}
-                      viewport={{ once: true }}
-                      style={{ transformOrigin: "left" }}
-                    />
-                  </div>
+                    {/* Visual Element - Image */}
+                    <div className={`${isEven ? '' : 'lg:[direction:ltr]'} flex ${isEven ? 'lg:justify-start' : 'lg:justify-end'} justify-center`}>
+                      <div className="relative w-64 h-64 lg:w-80 lg:h-80 group">
+                        {/* Image Container */}
+                        <div className="absolute inset-0 rounded-full overflow-hidden">
+                          {milestone.image && (
+                            <Image
+                              src={milestone.image}
+                              alt={milestone.title}
+                              fill
+                              className={`object-cover transition-all duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                              sizes="(max-width: 768px) 256px, 320px"
+                            />
+                          )}
+                          {/* Overlay */}
+                          <div className={`absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/60 via-transparent to-transparent transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`} />
+                        </div>
+                        
+                        {/* Border Rings */}
+                        <div className={`absolute inset-0 rounded-full border-2 border-[#d4af37]/20 transition-all duration-500 ${isHovered ? 'scale-105 border-[#d4af37]/40' : 'scale-100'}`} />
+                        <div className={`absolute inset-2 rounded-full border border-[#faf8f3]/10 transition-all duration-700 ${isHovered ? 'scale-110 opacity-0' : 'scale-100 opacity-100'}`} />
+                        
+                        {/* Number Overlay (subtle, on top of image) */}
+                        <div className={`absolute inset-0 flex items-end justify-center pb-8 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
+                          <span className="font-playfair text-5xl lg:text-6xl font-thin text-[#faf8f3]/30">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
                 </motion.div>
-
-                {/* Connection Line (for desktop) */}
-                {index < milestones.length - 1 && (
-                  <motion.div
-                    className="hidden md:block absolute -bottom-6 left-1/2 w-px h-12 bg-gradient-to-b from-[#d4af37]/30 to-transparent"
-                    initial={{ scaleY: 0 }}
-                    whileInView={{ scaleY: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.2 + 0.8 }}
-                    viewport={{ once: true }}
-                  />
-                )}
-              </motion.div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
-        {/* Final Quote Section */}
+        {/* Elegant Footer Quote */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 2 }}
           viewport={{ once: true }}
-          className="text-center mt-32 relative"
+          className="mt-40 text-center"
         >
-          <motion.div
-            className="absolute inset-0 flex items-center justify-center"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            viewport={{ once: true }}
-          >
-            <div className="w-96 h-96 bg-gradient-to-r from-[#d4af37]/10 to-rose-500/10 rounded-full blur-3xl" />
-          </motion.div>
-          
-          <div className="relative">
-            <motion.div
-              className="inline-flex items-center gap-4 mb-6"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
-              <span className="h-px w-16 bg-gradient-to-r from-transparent to-[#d4af37]" />
-              <Heart className="w-8 h-8 text-[#d4af37]" />
-              <span className="h-px w-16 bg-gradient-to-l from-transparent to-[#d4af37]" />
-            </motion.div>
+          <div className="max-w-3xl mx-auto">
+            {/* Decorative Elements */}
+            <div className="flex items-center justify-center mb-12">
+              <motion.div 
+                className="h-[0.5px] w-24 bg-gradient-to-r from-transparent to-[#d4af37]/20"
+                initial={{ width: 0 }}
+                whileInView={{ width: 96 }}
+                transition={{ duration: 1.5 }}
+                viewport={{ once: true }}
+              />
+              <div className="w-2 h-2 bg-[#d4af37]/20 rounded-full mx-6" />
+              <motion.div 
+                className="h-[0.5px] w-24 bg-gradient-to-l from-transparent to-[#d4af37]/20"
+                initial={{ width: 0 }}
+                whileInView={{ width: 96 }}
+                transition={{ duration: 1.5 }}
+                viewport={{ once: true }}
+              />
+            </div>
             
-            <motion.p 
-              className="text-2xl lg:text-3xl font-playfair italic text-transparent bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            >
-              "From that first coffee to forever"
-            </motion.p>
-            
-            <motion.p
-              className="mt-4 text-sm tracking-[3px] uppercase text-[#faf8f3]/40"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
+            {/* Quote */}
+            <motion.blockquote
+              className="relative"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Our Story Continues
-            </motion.p>
+              <p className="font-playfair text-3xl lg:text-4xl font-thin italic text-[#faf8f3]/70 leading-relaxed">
+                "In all the world, there is no heart for me like yours.
+                <span className="block mt-2">In all the world, there is no love for you like mine."</span>
+              </p>
+              <cite className="block mt-8 text-xs tracking-[0.3em] uppercase text-[#d4af37]/40 not-italic">
+                — Maya Angelou
+              </cite>
+            </motion.blockquote>
           </div>
         </motion.div>
       </div>

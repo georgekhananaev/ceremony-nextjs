@@ -41,8 +41,41 @@ export default function Contact() {
     const mapUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.5799!2d${venue.coordinates.lng}!3d${venue.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQ0JzMyLjAiTiAxMDDCsDM0JzMxLjUiRQ!5e0!3m2!1sen!2sth!4v1635835200000!5m2!1sen!2sth`;
 
     return (
-        <section className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a]">
-            <div className="max-w-6xl w-full mx-auto px-6">
+        <section className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a] relative overflow-hidden">
+            {/* Elegant Gradient Mesh Background - same as Hero */}
+            <div className="absolute inset-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0f0f0f]"/>
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#d4af3715] via-transparent to-[#ff6b6b10]"/>
+                <div className="absolute inset-0 bg-gradient-to-bl from-[#87a87810] via-transparent to-transparent"/>
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(212,175,55,0.08)_0%,_transparent_40%)]"/>
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_rgba(135,168,120,0.06)_0%,_transparent_40%)]"/>
+            </div>
+
+            {/* Floating Particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {[...Array(20)].map((_, i) => (
+                    <motion.div
+                        key={i}
+                        className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full"
+                        style={{
+                            left: `${(i * 13) % 100}%`,
+                            top: `${(i * 17) % 100}%`
+                        }}
+                        animate={{ 
+                            y: [-20, -120],
+                            opacity: [0, 1, 0]
+                        }}
+                        transition={{
+                            duration: 10 + (i % 3) * 5,
+                            repeat: Infinity,
+                            delay: i * 0.5,
+                            ease: "linear"
+                        }}
+                    />
+                ))}
+            </div>
+
+            <div className="max-w-6xl w-full mx-auto px-6 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}

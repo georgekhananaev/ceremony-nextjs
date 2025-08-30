@@ -28,7 +28,14 @@ export default function Hero() {
       {/* Elegant Gradient Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0f0f0f]"/>
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#d4af3710] via-transparent to-[#ff6b6b08]"/>
+        {/* Multiple gradient overlays for better distribution */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#d4af3715] via-transparent to-[#ff6b6b10]"/>
+        <div className="absolute inset-0 bg-gradient-to-bl from-[#87a87810] via-transparent to-transparent"/>
+        <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-[#d4af3708] to-[#faf8f305]"/>
+        {/* Radial gradients for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(212,175,55,0.1)_0%,_transparent_40%)]"/>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(255,107,107,0.08)_0%,_transparent_40%)]"/>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(135,168,120,0.05)_0%,_transparent_60%)]"/>
       </div>
 
       {/* Animated Light Beams */}
@@ -60,7 +67,7 @@ export default function Hero() {
           transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
         />
         
-        {/* Elegant floating orbs */}
+        {/* Elegant floating orbs - distributed across screen */}
         <motion.div
           className="absolute top-[15%] right-[10%] w-32 h-32"
           animate={{ 
@@ -69,7 +76,7 @@ export default function Hero() {
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="w-full h-full rounded-full bg-gradient-to-br from-[#d4af3715] to-transparent blur-xl"/>
+          <div className="w-full h-full rounded-full bg-gradient-to-br from-[#d4af3720] to-transparent blur-xl"/>
         </motion.div>
         
         <motion.div
@@ -80,34 +87,75 @@ export default function Hero() {
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#ff6b6b10] to-transparent blur-2xl"/>
+          <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#ff6b6b15] to-transparent blur-2xl"/>
         </motion.div>
 
-        {/* Subtle particles */}
-        {isClient && [...Array(5)].map((_, i) => {
-          const startX = (i * 20 + 10) + '%';
-          const endX = ((i * 20 + 10) + (i % 2 === 0 ? 10 : -10)) + '%';
-          return (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-[#d4af37] rounded-full opacity-30"
-              initial={{ 
-                x: startX,
-                y: '110%'
-              }}
-              animate={{ 
-                y: '-10%',
-                x: endX
-              }}
-              transition={{ 
-                duration: 15 + i * 5,
-                repeat: Infinity,
-                delay: i * 2,
-                ease: "linear"
-              }}
-            />
-          );
-        })}
+        {/* Additional floating orbs for better distribution */}
+        <motion.div
+          className="absolute top-[60%] right-[25%] w-48 h-48"
+          animate={{ 
+            y: [0, 25, 0],
+            x: [0, -15, 0],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        >
+          <div className="w-full h-full rounded-full bg-gradient-to-tl from-[#87a87815] to-transparent blur-2xl"/>
+        </motion.div>
+
+        <motion.div
+          className="absolute top-[30%] left-[15%] w-36 h-36"
+          animate={{ 
+            y: [0, -35, 0],
+            x: [0, 25, 0],
+          }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        >
+          <div className="w-full h-full rounded-full bg-gradient-to-br from-[#d4af3718] to-transparent blur-xl"/>
+        </motion.div>
+
+        <motion.div
+          className="absolute bottom-[40%] right-[5%] w-28 h-28"
+          animate={{ 
+            y: [0, 20, 0],
+            x: [0, -20, 0],
+          }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        >
+          <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#faf8f310] to-transparent blur-xl"/>
+        </motion.div>
+
+        <motion.div
+          className="absolute top-[10%] left-[40%] w-44 h-44"
+          animate={{ 
+            y: [0, -20, 0],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+        >
+          <div className="w-full h-full rounded-full bg-gradient-to-b from-[#d4af3712] to-transparent blur-2xl"/>
+        </motion.div>
+
+        {/* Subtle particles - floating upward like in LoveStory */}
+        {isClient && [...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full"
+            style={{
+              left: `${(i * 13) % 100}%`,
+              top: `${(i * 17) % 100}%`
+            }}
+            animate={{ 
+              y: [-20, -120],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 8 + (i % 3) * 4,
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "linear"
+            }}
+          />
+        ))}
       </div>
 
       {/* Main Content */}
