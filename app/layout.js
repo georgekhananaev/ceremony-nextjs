@@ -1,4 +1,4 @@
-import './globals.css'
+import './styles/globals.css'
 import settings from './config/settings'
 import { Inter, Playfair_Display, Dancing_Script } from 'next/font/google'
 

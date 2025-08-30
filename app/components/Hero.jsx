@@ -428,7 +428,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-20 left-1/2 transform -translate-x-1/2 cursor-pointer group"
+        className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 cursor-pointer group"
         onClick={scrollToNext}
       >
         <div className="flex flex-col items-center gap-3">

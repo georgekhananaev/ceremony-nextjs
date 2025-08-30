@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Import performance optimizations */
-@import './styles/performance.css';
+@import 'performance.css';
 
 
 :root {
