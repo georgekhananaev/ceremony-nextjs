@@ -141,9 +141,9 @@ const settings = {
       caption: "The rings"
     },
     {
-      url: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=500&q=80",
-      alt: "Engagement photo",
-      caption: "Engaged!"
+      url: "./our_rings.png",
+      alt: "Our Wedding Rings",
+      caption: "Our Wedding Rings"
     },
     {
       url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500&q=80",

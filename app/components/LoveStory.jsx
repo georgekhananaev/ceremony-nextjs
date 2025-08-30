@@ -25,7 +25,7 @@ export default function LoveStory() {
   }));
 
   return (
-    <section className="min-h-screen py-40 bg-[#0a0a0a] relative overflow-hidden">
+    <section id="love-story" className="min-h-screen py-40 bg-[#0a0a0a] relative overflow-hidden">
       {/* Elegant Gradient Background - Same as Hero */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0f0f0f]"/>

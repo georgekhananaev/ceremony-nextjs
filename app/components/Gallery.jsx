@@ -47,7 +47,7 @@ export default function Gallery() {
 
   return (
     <>
-      <section className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a]">
+      <section id="gallery" className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a]">
 
         <div className="max-w-6xl w-full mx-auto px-6 relative z-10">
           <motion.div

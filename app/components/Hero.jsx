@@ -24,7 +24,7 @@ export default function Hero() {
   };
 
   return (
-    <div className="h-screen relative flex items-center justify-center overflow-hidden">
+    <div id="hero" className="h-screen relative flex items-center justify-center overflow-hidden">
       {/* Elegant Gradient Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a1a] to-[#0f0f0f]"/>
