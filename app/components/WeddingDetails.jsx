@@ -2,14 +2,15 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, MapPin, Calendar, Music, Utensils, Camera, Heart, Users, Sparkles, ChevronRight, ChevronLeft, Palette, Gift, X, CalendarPlus } from 'lucide-react';
+import { Clock, MapPin, Calendar, Music, Utensils, Camera, Heart, Users, Sparkles, Palette, Gift, CalendarPlus, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import settings from '../config/settings';
+import Lightbox from './shared/Lightbox';
 
 export default function WeddingDetails() {
   const { wedding, venue, events, social, venueGallery } = settings;
   const [activeTab, setActiveTab] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [calendarUrl, setCalendarUrl] = useState('#');
   const [mounted, setMounted] = useState(false);
@@ -48,23 +49,15 @@ export default function WeddingDetails() {
   // Lightbox functions
   const openLightbox = (index) => {
     setCurrentIndex(index);
-    setSelectedImage(venueGallery.images[index]);
+    setIsLightboxOpen(true);
   };
 
   const closeLightbox = () => {
-    setSelectedImage(null);
+    setIsLightboxOpen(false);
   };
 
-  const goToPrevious = () => {
-    const newIndex = currentIndex === 0 ? venueGallery.images.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    setSelectedImage(venueGallery.images[newIndex]);
-  };
-
-  const goToNext = () => {
-    const newIndex = currentIndex === venueGallery.images.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-    setSelectedImage(venueGallery.images[newIndex]);
+  const navigateToImage = (index) => {
+    setCurrentIndex(index);
   };
   
   // Timeline data
@@ -601,80 +594,14 @@ export default function WeddingDetails() {
         </div>
       </section>
 
-      {/* Lightbox - Same as Venue */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#1a1a1a]/95 z-[200] flex items-center justify-center p-4"
-            onClick={closeLightbox}
-          >
-            <button
-              className="absolute top-4 right-4 text-white hover:text-[#d4af37] transition-colors z-[210]"
-              onClick={closeLightbox}
-            >
-              <X className="w-8 h-8" />
-            </button>
-
-            <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] transition-colors z-[210]"
-              onClick={(e) => {
-                e.stopPropagation();
-                goToPrevious();
-              }}
-            >
-              <ChevronLeft className="w-12 h-12" />
-            </button>
-
-            <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] transition-colors z-[210]"
-              onClick={(e) => {
-                e.stopPropagation();
-                goToNext();
-              }}
-            >
-              <ChevronRight className="w-12 h-12" />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="relative max-w-5xl max-h-[90vh] w-full h-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Image
-                src={selectedImage.url}
-                alt={selectedImage.alt}
-                fill
-                className="object-contain"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1a1a1a] to-transparent p-6">
-                <p className="text-white text-center text-lg">{selectedImage.caption}</p>
-              </div>
-            </motion.div>
-
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-[210]">
-              {venueGallery.images.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentIndex 
-                      ? 'bg-[#d4af37] w-8' 
-                      : 'bg-white/50 hover:bg-white'
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openLightbox(index);
-                  }}
-                />
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Lightbox */}
+      <Lightbox
+        images={venueGallery.images}
+        currentIndex={currentIndex}
+        isOpen={isLightboxOpen}
+        onClose={closeLightbox}
+        onNavigate={navigateToImage}
+      />
     </>
   );
 }

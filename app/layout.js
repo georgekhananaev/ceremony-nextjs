@@ -31,12 +31,11 @@ export const metadata = {
     siteName: `${settings.couple.bride.name} & ${settings.couple.groom.name} Wedding`,
     images: [
       {
-        url: `${siteUrl}/thumbnail.png`,
-        secureUrl: `${siteUrl}/thumbnail.png`,
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: `${settings.couple.bride.name} & ${settings.couple.groom.name} Wedding Invitation`,
-        type: 'image/png',
+        type: 'image/jpeg',
       }
     ],
     locale: 'en_US',
@@ -48,7 +47,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: `${settings.couple.bride.name} & ${settings.couple.groom.name} - ${settings.wedding.displayDate}`,
     description: `Join us for our wedding celebration at ${settings.venue.name}. RSVP at our website!`,
-    images: [`${siteUrl}/thumbnail.png`],
+    images: ['/og-image.jpg'],
     creator: settings.social.instagram.wedding || settings.social.instagram.bride,
   },
   
@@ -90,22 +89,20 @@ export const metadata = {
   // Manifest for PWA
   manifest: '/manifest.json',
   
-  // Theme color
-  themeColor: settings.theme.colors.gold,
-  
-  // Viewport
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  
   // Format detection
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
+}
+
+// Separate viewport export as required by Next.js 14+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: settings.theme.colors.primary,
 }
 
 export default function RootLayout({ children }) {
@@ -117,7 +114,7 @@ export default function RootLayout({ children }) {
         {/* Open Graph meta tags for better WhatsApp/social media support */}
         <meta property="og:title" content={`${settings.couple.bride.name} & ${settings.couple.groom.name} are Getting Married!`} />
         <meta property="og:description" content={`Save the date! Join us for our wedding celebration on ${settings.wedding.displayDate}`} />
-        <meta property="og:image" content={`${siteUrl}/thumbnail.png`} />
+        <meta property="og:image" content="/og-image.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:type" content="image/png" />
@@ -128,7 +125,7 @@ export default function RootLayout({ children }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${settings.couple.bride.name} & ${settings.couple.groom.name} - ${settings.wedding.displayDate}`} />
         <meta name="twitter:description" content={`Join us for our wedding celebration at ${settings.venue.name}`} />
-        <meta name="twitter:image" content={`${siteUrl}/thumbnail.png`} />
+        <meta name="twitter:image" content="/og-image.jpg" />
         
         {/* Additional structured data for rich snippets */}
         <script

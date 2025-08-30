@@ -1,49 +1,29 @@
 'use client'
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Maximize2 } from 'lucide-react';
+import Image from 'next/image';
 import settings from '../config/settings';
+import Lightbox from './shared/Lightbox';
 
 export default function Gallery() {
   const photos = settings.gallery;
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const openLightbox = (index) => {
     setCurrentIndex(index);
-    setSelectedImage(photos[index]);
+    setIsLightboxOpen(true);
   };
 
   const closeLightbox = () => {
-    setSelectedImage(null);
+    setIsLightboxOpen(false);
   };
 
-  const goToPrevious = () => {
-    const newIndex = currentIndex === 0 ? photos.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    setSelectedImage(photos[newIndex]);
+  const navigateToImage = (index) => {
+    setCurrentIndex(index);
   };
-
-  const goToNext = () => {
-    const newIndex = currentIndex === photos.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-    setSelectedImage(photos[newIndex]);
-  };
-
-  // Keyboard navigation
-  React.useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!selectedImage) return;
-      
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') goToPrevious();
-      if (e.key === 'ArrowRight') goToNext();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage, currentIndex]);
 
   return (
     <>
@@ -90,10 +70,13 @@ export default function Gallery() {
                 whileHover={{ scale: 0.98 }}
                 onClick={() => openLightbox(index)}
               >
-                <img 
+                <Image 
                   src={photo.url}
                   alt={photo.alt}
-                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                  loading="lazy"
                 />
                 
                 {/* Overlay with caption and icon */}
@@ -134,79 +117,14 @@ export default function Gallery() {
         </div>
       </section>
 
-      {/* Lightbox - EXACT same as Venue */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-[#1a1a1a]/95 z-[200] flex items-center justify-center p-4"
-            onClick={closeLightbox}
-          >
-            <button
-              className="absolute top-4 right-4 text-white hover:text-[#d4af37] transition-colors z-[210]"
-              onClick={closeLightbox}
-            >
-              <X className="w-8 h-8" />
-            </button>
-
-            <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] transition-colors z-[210]"
-              onClick={(e) => {
-                e.stopPropagation();
-                goToPrevious();
-              }}
-            >
-              <ChevronLeft className="w-12 h-12" />
-            </button>
-
-            <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-[#d4af37] transition-colors z-[210]"
-              onClick={(e) => {
-                e.stopPropagation();
-                goToNext();
-              }}
-            >
-              <ChevronRight className="w-12 h-12" />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="relative max-w-5xl max-h-[90vh] w-full h-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img
-                src={selectedImage.url}
-                alt={selectedImage.alt}
-                className="w-full h-full object-contain"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1a1a1a] to-transparent p-6">
-                <p className="text-white text-center text-lg">{selectedImage.caption}</p>
-              </div>
-            </motion.div>
-
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-[210]">
-              {photos.map((_, index) => (
-                <button
-                  key={index}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    index === currentIndex 
-                      ? 'bg-[#d4af37]' 
-                      : 'bg-white/30 hover:bg-white/50'
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    openLightbox(index);
-                  }}
-                />
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Lightbox */}
+      <Lightbox
+        images={photos}
+        currentIndex={currentIndex}
+        isOpen={isLightboxOpen}
+        onClose={closeLightbox}
+        onNavigate={navigateToImage}
+      />
     </>
   );
 }

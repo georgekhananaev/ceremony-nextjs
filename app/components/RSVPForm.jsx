@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Check, User, Mail, Phone, Users, MessageSquare } from 'lucide-react';
+import { Send, Check, Mail } from 'lucide-react';
 
 export default function RSVPForm() {
     const [formData, setFormData] = useState({

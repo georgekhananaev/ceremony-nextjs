@@ -2,6 +2,38 @@
 // Edit this file to customize all wedding details
 
 const settings = {
+  // Theme Configuration
+  theme: {
+    colors: {
+      primary: '#d4af37', // Gold
+      secondary: '#ff6b6b', // Rose
+      accent: '#4a90e2', // Blue
+      dark: '#1a1a1a',
+      darker: '#0a0a0a',
+      light: '#f5f5f5',
+      white: '#ffffff',
+      overlay: 'rgba(26, 26, 26, 0.95)',
+      text: {
+        primary: '#ffffff',
+        secondary: '#d4af37',
+        dark: '#1a1a1a'
+      }
+    },
+    animations: {
+      duration: {
+        fast: 0.3,
+        medium: 0.5,
+        slow: 1.0,
+        verySlow: 1.5
+      },
+      easing: 'easeInOut'
+    },
+    spacing: {
+      section: 'py-20',
+      container: 'px-4 md:px-8'
+    }
+  },
+
   // Couple Information
   couple: {
     bride: {
@@ -131,32 +163,32 @@ const settings = {
   // Gallery Images
   gallery: [
     {
-      url: "https://images.unsplash.com/photo-1519741497674-611481863552?w=500&q=80",
+      url: "/our-moments/no-image.jpg",
       alt: "Romantic couple photo",
       caption: "Our engagement shoot"
     },
     {
-      url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500&q=80",
+      url: "/our-moments/no-image.jpg",
       alt: "Beautiful wedding rings",
       caption: "The rings"
     },
     {
-      url: "./our_rings.png",
+      url: "/our-moments/no-image.jpg",
       alt: "Our Wedding Rings",
       caption: "Our Wedding Rings"
     },
     {
-      url: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=500&q=80",
+      url: "/our-moments/no-image.jpg",
       alt: "Wedding bouquet",
       caption: "Floral details"
     },
     {
-      url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=500&q=80",
+      url: "/our-moments/no-image.jpg",
       alt: "Couple walking together",
       caption: "Adventure awaits"
     },
     {
-      url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500&q=80",
+      url: "/our-moments/no-image.jpg",
       alt: "Wedding celebration",
       caption: "Celebration time"
     }
