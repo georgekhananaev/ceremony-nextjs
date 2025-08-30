@@ -31,6 +31,10 @@ const settings = {
     spacing: {
       section: 'py-20',
       container: 'px-4 md:px-8'
+    },
+    fonts: {
+      heading: 'Playfair Display',
+      body: 'Inter'
     }
   },
 
@@ -238,22 +242,6 @@ const settings = {
     collectDietaryInfo: true,
     collectSongRequests: true,
     emailNotification: "rsvp@patinyaanddar.com"
-  },
-
-  // Theme Colors (for consistency)
-  theme: {
-    colors: {
-      primary: "#1a1a1a",
-      accent: "#ff6b6b",
-      gold: "#d4af37",
-      cream: "#faf8f3",
-      sage: "#87a878",
-      blush: "#ffc4c4"
-    },
-    fonts: {
-      heading: "Playfair Display",
-      body: "Inter"
-    }
   },
 
   // Registry Information
