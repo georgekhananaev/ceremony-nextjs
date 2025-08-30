@@ -31,20 +31,6 @@ const settings = {
     spacing: {
       section: 'py-20',
       container: 'px-4 md:px-8'
-    },
-    fonts: {
-      heading: 'Playfair Display',
-      body: 'Inter',
-      script: 'Dancing Script',
-      // Font weights
-      weights: {
-        thin: 100,
-        light: 300,
-        regular: 400,
-        medium: 500,
-        semibold: 600,
-        bold: 700
-      }
     }
   },
 

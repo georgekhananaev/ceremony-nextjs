@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <!-- Background -->
-  <rect width="32" height="32" fill="#1a1a1a"/>
-  
-  <!-- P & D text -->
-  <text x="16" y="20" font-family="serif" font-size="11" font-weight="400" fill="#d4af37" text-anchor="middle">P&amp;D</text>
+    <!-- Circular Background -->
+    <circle cx="16" cy="16" r="16" fill="#1a1a1a"/>
+
+    <!-- P & D text -->
+    <text x="16" y="20" font-family="serif" font-size="11" font-weight="400" fill="#d4af37" text-anchor="middle">P&amp;D</text>
 </svg>
