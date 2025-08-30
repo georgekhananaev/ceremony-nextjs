@@ -4,11 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, ExternalLink } from 'lucide-react';
 import settings from '../config/settings';
-import { usePerformance } from '../../hooks/usePerformance';
 
 export default function Contact() {
     const { couple, venue, wedding } = settings;
-    const performance = usePerformance();
     const [mounted, setMounted] = useState(false);
     
     useEffect(() => {

@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import performance optimizations */
-@import 'performance.css';
-
 
 :root {
   --primary: #1a1a1a;
@@ -16,7 +13,7 @@
 }
 
 html {
-  scroll-behavior: auto; /* Disabled to prevent conflicts with JS smooth scroll */
+  scroll-behavior: smooth;
 }
 
 body {

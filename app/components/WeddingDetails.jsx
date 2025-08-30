@@ -6,7 +6,6 @@ import { Clock, MapPin, Calendar, Music, Utensils, Camera, Heart, Users, Sparkle
 import Image from 'next/image';
 import settings from '../config/settings';
 import Lightbox from './shared/Lightbox';
-import { usePerformance } from '../../hooks/usePerformance';
 
 export default function WeddingDetails() {
   const { wedding, venue, events, social, venueGallery } = settings;
@@ -15,7 +14,6 @@ export default function WeddingDetails() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [calendarUrl, setCalendarUrl] = useState('#');
   const [mounted, setMounted] = useState(false);
-  const performance = usePerformance();
   
   // Generate Google Calendar URL on client side only
   React.useEffect(() => {

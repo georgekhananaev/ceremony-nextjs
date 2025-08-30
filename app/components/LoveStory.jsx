@@ -4,14 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import settings from '../config/settings';
-import { usePerformance } from '../../hooks/usePerformance';
 
 export default function LoveStory() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [mounted, setMounted] = useState(false);
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.3]);
-  const performance = usePerformance();
   
   useEffect(() => {
     setMounted(true);

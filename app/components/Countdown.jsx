@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import settings from '../config/settings';
-import { usePerformance } from '../../hooks/usePerformance';
-import { smoothScrollTo } from '../../utils/smoothScroll';
 
 export default function Countdown() {
   const [timeLeft, setTimeLeft] = useState({
@@ -16,7 +14,6 @@ export default function Countdown() {
   const [mounted, setMounted] = useState(false);
   const [isWeddingDay, setIsWeddingDay] = useState(false);
   const [isPastWedding, setIsPastWedding] = useState(false);
-  const performance = usePerformance();
 
   const handleCountdownClick = () => {
     // Trigger background music to play
@@ -24,7 +21,10 @@ export default function Countdown() {
   };
 
   const scrollToNext = () => {
-    smoothScrollTo('wedding-details', { duration: 800 });
+    const nextSection = document.querySelector('#wedding-details');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   useEffect(() => {
@@ -68,54 +68,54 @@ export default function Countdown() {
     <section id="countdown" className="min-h-screen flex items-center justify-center py-20 bg-gradient-to-br from-[#faf8f3] via-white to-[#f5f0e8] relative overflow-hidden" onClick={handleCountdownClick}>
       {/* Animated gradient orbs - lighter */}
       <div className="absolute inset-0">
-        {mounted && performance.animationLevel !== 'none' && (
+        {mounted && (
           <motion.div 
             className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#f4e4a1]/20 via-[#ffd700]/10 to-transparent rounded-full blur-3xl will-change-transform"
-            animate={performance.animationLevel === 'full' ? {
+            animate={{
               scale: [1, 1.2, 1],
               rotate: [0, 90, 0],
-            } : {}}
-            transition={performance.animationLevel === 'full' ? {
+            }}
+            transition={{
               duration: 20,
               repeat: Infinity,
               ease: "easeInOut"
-            } : {}}
+            }}
           />
         )}
-        {mounted && performance.animationLevel !== 'none' && (
+        {mounted && (
           <motion.div 
             className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-[#ffb6c1]/15 via-[#ffc0cb]/10 to-transparent rounded-full blur-3xl will-change-transform"
-            animate={performance.animationLevel === 'full' ? {
+            animate={{
               scale: [1, 1.3, 1],
               rotate: [0, -90, 0],
-            } : {}}
-            transition={performance.animationLevel === 'full' ? {
+            }}
+            transition={{
               duration: 25,
               repeat: Infinity,
               ease: "easeInOut"
-            } : {}}
+            }}
           />
         )}
-        {mounted && performance.animationLevel !== 'none' && (
+        {mounted && (
           <motion.div 
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-[#ffe4b5]/15 to-[#ffd700]/10 rounded-full blur-3xl will-change-transform"
-            animate={performance.animationLevel === 'full' ? {
+            animate={{
               scale: [0.8, 1.1, 0.8],
               rotate: [0, 180, 360],
-            } : {}}
-            transition={performance.animationLevel === 'full' ? {
+            }}
+            transition={{
               duration: 30,
               repeat: Infinity,
               ease: "linear"
-            } : {}}
+            }}
           />
         )}
       </div>
 
       {/* Floating stars and hearts */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Static sparkle stars - reduced based on performance */}
-        {mounted && performance.particleCount > 0 && [...Array(Math.min(performance.particleCount * 2, 40))].map((_, i) => {
+        {/* Static sparkle stars */}
+        {mounted && [...Array(40)].map((_, i) => {
           const colors = [
             'text-[#d4af37]/50',  // gold
             'text-[#ff9999]/40',  // light coral
@@ -151,8 +151,8 @@ export default function Countdown() {
           );
         })}
 
-        {/* Floating small hearts - reduced based on performance */}
-        {mounted && performance.particleCount > 0 && [...Array(Math.min(performance.particleCount, 15))].map((_, i) => {
+        {/* Floating small hearts */}
+        {mounted && [...Array(15)].map((_, i) => {
           const heartColors = [
             'text-[#ffb6c1]/35',  // light pink
             'text-[#ff9999]/30',  // light coral
@@ -170,18 +170,13 @@ export default function Countdown() {
                 left: `${(i * 67) % 100}%`,
                 bottom: '-5%'
               }}
-              animate={performance.animationLevel === 'full' ? { 
+              animate={{ 
                 y: ['0vh', '-110vh'],
                 x: [0, (i % 2 ? 20 : -20), 0],
                 rotate: [0, (i % 2 ? 15 : -15), 0],
-              } : { y: ['0vh', '-110vh'] }}
-              transition={performance.animationLevel === 'full' ? {
+              }}
+              transition={{
                 duration: 25 + (i % 3) * 10,
-                repeat: Infinity,
-                delay: i * 3,
-                ease: "linear"
-              } : {
-                duration: 30,
                 repeat: Infinity,
                 delay: i * 3,
                 ease: "linear"
@@ -194,8 +189,8 @@ export default function Countdown() {
           );
         })}
 
-        {/* Additional tiny hearts scattered - reduced based on performance */}
-        {mounted && performance.animationLevel === 'full' && [...Array(25)].map((_, i) => {
+        {/* Additional tiny hearts scattered */}
+        {mounted && [...Array(25)].map((_, i) => {
           const tinyHeartColors = [
             'text-[#ffb6c1]/20',  // light pink
             'text-[#87ceeb]/20',  // sky blue
