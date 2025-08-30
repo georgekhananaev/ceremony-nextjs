@@ -1,92 +1,136 @@
+'use client'
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Calendar, MapPin } from 'lucide-react';
+import { Heart, MapPin, Sparkles, Calendar } from 'lucide-react';
 
 export default function LoveStory() {
   const milestones = [
     { 
       date: "May 2021", 
       title: "First Meeting", 
-      description: "We met at a coffee shop in Bangkok. The conversation flowed naturally, and we knew this was something special.",
-      icon: Heart
+      description: "Coffee shop magic in Bangkok",
+      icon: Heart,
+      color: "from-[#ff6b6b] to-[#ffc4c4]"
     },
     { 
-      date: "December 2021", 
-      title: "First Trip Together", 
-      description: "Our adventure to Chiang Mai brought us closer. We discovered our shared love for adventure and exploration.",
-      icon: MapPin
+      date: "Dec 2021", 
+      title: "First Adventure", 
+      description: "Exploring Chiang Mai together",
+      icon: MapPin,
+      color: "from-[#87a878] to-[#a8c89a]"
     },
     { 
-      date: "February 2024", 
+      date: "Feb 2024", 
       title: "The Proposal", 
-      description: "Under the stars at Koh Samui beach, the question was asked and answered with a joyful 'Yes!'",
-      icon: Heart
+      description: "Under the stars at Koh Samui",
+      icon: Sparkles,
+      color: "from-[#d4af37] to-[#e6c757]"
     },
     { 
       date: "March 2026", 
-      title: "Our Wedding Day", 
-      description: "The beginning of our forever journey together, surrounded by family and friends.",
-      icon: Calendar
+      title: "Our Wedding", 
+      description: "Beginning our forever journey",
+      icon: Calendar,
+      color: "from-[#ff6b6b] to-[#d4af37]"
     }
   ];
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
+    <section className="min-h-screen flex items-center justify-center py-20 bg-[#1a1a1a]">
+      <div className="max-w-6xl w-full mx-auto px-6">
         <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-rose-500 to-amber-500 rounded-full mb-6">
-            <Heart className="w-8 h-8 text-white" />
-          </div>
-          <h2 className="text-5xl md:text-6xl font-light text-slate-800 mb-6">
-            Our <span className="text-rose-500">Love Story</span>
+          <h2 className="font-playfair text-[clamp(3rem,8vw,5rem)] font-black mb-5 text-gradient-gold">
+            OUR LOVE STORY
           </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Every love story is beautiful, but ours is our favorite. 
-            Join us as we share the moments that brought us together.
+          <p className="text-lg font-light tracking-[2px] uppercase opacity-60 text-[#faf8f3]">
+            Every Chapter Led Us Here
           </p>
         </motion.div>
 
+        {/* Mobile-First Timeline */}
         <div className="relative">
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-rose-200"></div>
+          {/* Vertical Line - Hidden on mobile, visible on desktop */}
+          <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 h-full w-[2px] bg-gradient-to-b from-[#ff6b6b] via-[#d4af37] to-[#87a878]"></div>
           
-          {milestones.map((milestone, index) => {
-            const Icon = milestone.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className={`flex items-center mb-12 ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
-                }`}
-              >
-                <div className="w-1/2" />
-                
-                <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                  <div className="w-12 h-12 bg-gradient-to-r from-rose-500 to-amber-500 rounded-full flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-white" />
+          {/* Mobile Vertical Line */}
+          <div className="lg:hidden absolute left-8 top-0 h-full w-[2px] bg-gradient-to-b from-[#ff6b6b] via-[#d4af37] to-[#87a878]"></div>
+          
+          <div className="space-y-12 lg:space-y-24">
+            {milestones.map((milestone, index) => {
+              const Icon = milestone.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className={`flex items-center ${
+                    index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                  } flex-row`}
+                >
+                  {/* Desktop Spacer */}
+                  <div className="hidden lg:block w-1/2" />
+                  
+                  {/* Icon Circle */}
+                  <div className="absolute left-0 lg:left-1/2 transform lg:-translate-x-1/2 z-10">
+                    <motion.div 
+                      className={`w-16 h-16 bg-gradient-to-br ${milestone.color} rounded-full flex items-center justify-center shadow-lg`}
+                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Icon className="w-8 h-8 text-white" />
+                    </motion.div>
                   </div>
-                </div>
 
-                <div className={`w-1/2 ${index % 2 === 0 ? 'pr-12 text-right' : 'pl-12'}`}>
-                  <div className="bg-white rounded-2xl p-8 shadow-lg border border-rose-100/50">
-                    <p className="text-rose-500 font-medium mb-2">{milestone.date}</p>
-                    <h3 className="text-2xl font-light text-slate-800 mb-3">{milestone.title}</h3>
-                    <p className="text-slate-600 leading-relaxed">{milestone.description}</p>
+                  {/* Content Card */}
+                  <div className={`w-full lg:w-1/2 ${
+                    index % 2 === 0 ? 'lg:pr-16' : 'lg:pl-16'
+                  } pl-24 lg:pl-0 lg:pr-0`}>
+                    <motion.div 
+                      className="glass p-6 lg:p-8 hover:shadow-2xl transition-shadow duration-300 rounded-2xl"
+                      whileHover={{ y: -5 }}
+                    >
+                      <div className={`${
+                        index % 2 === 0 ? 'lg:text-right' : 'lg:text-left'
+                      } text-left`}>
+                        <span className="inline-block px-3 py-1 bg-[#d4af37]/20 text-[#d4af37] text-sm font-medium rounded-full mb-3">
+                          {milestone.date}
+                        </span>
+                        <h3 className="text-2xl lg:text-3xl font-playfair font-bold mb-2 text-[#faf8f3]">
+                          {milestone.title}
+                        </h3>
+                        <p className="text-base lg:text-lg opacity-70 leading-relaxed text-[#faf8f3]">
+                          {milestone.description}
+                        </p>
+                      </div>
+                    </motion.div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
+
+        {/* Bottom Quote */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mt-20"
+        >
+          <p className="text-xl lg:text-2xl font-playfair italic text-[#d4af37]">
+            "From that first coffee to forever"
+          </p>
+        </motion.div>
       </div>
     </section>
   );
