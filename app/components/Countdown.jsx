@@ -15,6 +15,13 @@ export default function Countdown() {
   const [isWeddingDay, setIsWeddingDay] = useState(false);
   const [isPastWedding, setIsPastWedding] = useState(false);
 
+  const scrollToNext = () => {
+    const nextSection = document.querySelector('#wedding-details');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
     setMounted(true);
     const calculateTimeLeft = () => {
@@ -459,6 +466,29 @@ export default function Countdown() {
           </motion.p>
         </motion.div>
       </div>
+
+      {/* Scroll Indicator - Darker for light background */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group"
+        onClick={scrollToNext}
+      >
+        <div className="flex flex-col items-center gap-3">
+          <motion.div
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-[30px] h-[50px] border border-[#8b6914]/60 rounded-full flex items-start justify-center p-2 group-hover:border-[#8b6914] transition-colors"
+          >
+            <motion.div
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-1 h-2 bg-[#8b6914] rounded-full"
+            />
+          </motion.div>
+        </div>
+      </motion.div>
     </section>
   );
 }

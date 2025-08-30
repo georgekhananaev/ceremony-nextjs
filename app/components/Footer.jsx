@@ -10,8 +10,7 @@ export default function Footer() {
     
     const socialLinks = [
         { name: 'IG', href: `https://instagram.com/${social.instagram.wedding.replace('@', '')}` },
-        { name: 'FB', href: social.facebook.eventPage },
-        { name: social.instagram.hashtag, href: `https://instagram.com/explore/tags/${social.instagram.hashtag.replace('#', '')}` }
+        { name: 'FB', href: social.facebook.eventPage }
     ];
 
     return (
@@ -93,10 +92,6 @@ export default function Footer() {
 
                     {/* Copyright and Credits */}
                     <div className="space-y-4">
-                        <p className="text-sm text-[#faf8f3] opacity-50">
-                            © {new Date(settings.wedding.date).getFullYear()} {settings.couple.bride.name} & {settings.couple.groom.name}. All rights reserved.
-                        </p>
-                        
                         {/* Animated Heart */}
                         <motion.div
                             animate={{ 
@@ -112,8 +107,20 @@ export default function Footer() {
                             <Heart className="w-6 h-6 text-[#ff6b6b] fill-[#ff6b6b] mx-auto" />
                         </motion.div>
 
-                        <p className="text-xs text-[#faf8f3] opacity-30 tracking-wider uppercase">
+                        <p className="text-xs text-[#faf8f3] opacity-60 tracking-wider uppercase">
                             Made with love for our special day
+                        </p>
+                        
+                        <p className="text-[10px] text-[#faf8f3] opacity-50 mt-4">
+                            Designed & Developed by{' '}
+                            <a 
+                                href="https://george.khananaev.com/" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-[#d4af37] hover:text-[#f4e4a1] transition-colors duration-300"
+                            >
+                                George Khananaev
+                            </a>
                         </p>
                     </div>
                 </motion.div>
