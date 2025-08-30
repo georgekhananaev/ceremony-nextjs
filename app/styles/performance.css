@@ -1,0 +1,156 @@
+/* Performance Optimizations for GPU Acceleration */
+
+/* Force GPU acceleration for animated elements */
+.will-change-transform {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Optimize backdrop filters */
+.backdrop-blur-sm {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Optimize motion animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .motion-reduce\:transform-none {
+    transform: none !important;
+  }
+  
+  .motion-reduce\:hidden {
+    display: none !important;
+  }
+}
+
+/* Optimize for mobile devices */
+@media (max-width: 768px) {
+  /* Disable complex animations on mobile */
+  .mobile\:animation-none {
+    animation: none !important;
+  }
+  
+  /* Reduce particle effects on mobile */
+  .mobile\:opacity-0 {
+    opacity: 0 !important;
+  }
+  
+  /* Simplify transforms on mobile */
+  .mobile\:transform-none {
+    transform: none !important;
+  }
+}
+
+/* Optimize scroll performance */
+.scroll-smooth {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize image loading */
+img {
+  content-visibility: auto;
+}
+
+/* Optimize font rendering */
+body {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize layout calculations */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-style {
+  contain: style;
+}
+
+/* Optimize blur effects */
+.blur-3xl {
+  filter: blur(64px);
+  will-change: filter;
+}
+
+.blur-2xl {
+  filter: blur(40px);
+  will-change: filter;
+}
+
+.blur-xl {
+  filter: blur(24px);
+  will-change: filter;
+}
+
+/* Optimize transform-origin for common animations */
+.origin-center {
+  transform-origin: center;
+}
+
+/* Hardware acceleration for floating elements */
+.hardware-accelerated {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Optimize for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .hover\:scale-105:hover {
+    transform: scale(1) !important;
+  }
+  
+  .hover\:opacity-100:hover {
+    opacity: inherit !important;
+  }
+  
+  /* Increase touch targets */
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Performance-friendly gradients */
+.gradient-perf {
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+  will-change: background-position;
+}
+
+/* Optimize transitions */
+.transition-gpu {
+  transition-property: transform, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Reduce paint areas */
+.isolate {
+  isolation: isolate;
+}
+
+/* Optimize z-index stacking */
+.z-layer-0 { z-index: 0; }
+.z-layer-1 { z-index: 10; }
+.z-layer-2 { z-index: 20; }
+.z-layer-3 { z-index: 30; }
+.z-layer-4 { z-index: 40; }
+.z-layer-5 { z-index: 50; }

@@ -65,7 +65,7 @@ export default function RSVPForm() {
                     className="text-center mb-16"
                 >
                     <h2 className="font-playfair text-[clamp(6rem,12vw,7rem)] font-thin tracking-[0.02em] mb-5 drop-shadow-[0_0_5px_rgba(212,175,55,0.4)] ">
-                        <span className="bg-gradient-to-r from-[#1a1a1a] via-[#d4af37] to-[#1a1a1a] bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-[#1a1a1a] via-[#514343] to-[#1a1a1a] bg-clip-text text-transparent">
                             RSVP
                         </span>
                     </h2>

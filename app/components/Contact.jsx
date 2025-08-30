@@ -4,9 +4,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock, ExternalLink } from 'lucide-react';
 import settings from '../config/settings';
+import { usePerformance } from '../../hooks/usePerformance';
 
 export default function Contact() {
     const { couple, venue, wedding } = settings;
+    const performance = usePerformance();
     
     const contactInfo = [
         {
@@ -51,35 +53,37 @@ export default function Contact() {
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_rgba(135,168,120,0.06)_0%,_transparent_40%)]"/>
             </div>
 
-            {/* Floating Particles */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {[...Array(20)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full"
-                        style={{
-                            left: `${(i * 13) % 100}%`,
-                            top: `${(i * 17) % 100}%`
-                        }}
-                        animate={{ 
-                            y: [-20, -120],
-                            opacity: [0, 1, 0]
-                        }}
-                        transition={{
-                            duration: 10 + (i % 3) * 5,
-                            repeat: Infinity,
-                            delay: i * 0.5,
-                            ease: "linear"
-                        }}
-                    />
-                ))}
-            </div>
+            {/* Floating Particles - reduced based on performance */}
+            {performance.particleCount > 0 && (
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    {[...Array(Math.min(performance.particleCount, 20))].map((_, i) => (
+                        <motion.div
+                            key={i}
+                            className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full will-change-transform"
+                            style={{
+                                left: `${(i * 13) % 100}%`,
+                                top: `${(i * 17) % 100}%`
+                            }}
+                            animate={{ 
+                                y: [-20, -120],
+                                opacity: [0, 1, 0]
+                            }}
+                            transition={{
+                                duration: 10 + (i % 3) * 5,
+                                repeat: Infinity,
+                                delay: i * 0.5,
+                                ease: "linear"
+                            }}
+                        />
+                    ))}
+                </div>
+            )}
 
             <div className="max-w-6xl w-full mx-auto px-6 relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: performance.animationLevel === 'none' ? 0 : 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    transition={{ duration: performance.animationLevel === 'none' ? 0 : 0.8 }}
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
@@ -99,17 +103,17 @@ export default function Contact() {
                         return (
                             <motion.div
                                 key={index}
-                                initial={{ opacity: 0, y: 50 }}
+                                initial={{ opacity: 0, y: performance.animationLevel === 'none' ? 0 : 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: index * 0.1 }}
+                                transition={{ duration: performance.animationLevel === 'none' ? 0 : 0.6, delay: performance.animationLevel === 'none' ? 0 : index * 0.1 }}
                                 viewport={{ once: true }}
                                 className="glass p-8 text-center group hover:shadow-2xl transition-all duration-300 rounded-2xl"
-                                whileHover={{ y: -10 }}
+                                whileHover={performance.animationLevel === 'full' ? { y: -10 } : {}}
                             >
                                 <motion.div 
                                     className={`w-20 h-20 bg-gradient-to-br ${item.color} rounded-full mx-auto mb-6 flex items-center justify-center`}
-                                    whileHover={{ scale: 1.1, rotate: 360 }}
-                                    transition={{ duration: 0.5 }}
+                                    whileHover={performance.animationLevel === 'full' ? { scale: 1.1, rotate: 360 } : {}}
+                                    transition={performance.animationLevel === 'full' ? { duration: 0.5 } : {}}
                                 >
                                     <Icon className="w-10 h-10 text-white" />
                                 </motion.div>
@@ -132,9 +136,9 @@ export default function Contact() {
 
                 {/* Venue Details & Map */}
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: performance.animationLevel === 'none' ? 0 : 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
+                    transition={{ duration: performance.animationLevel === 'none' ? 0 : 0.8, delay: performance.animationLevel === 'none' ? 0 : 0.4 }}
                     viewport={{ once: true }}
                     className="mt-16 grid lg:grid-cols-2 gap-8"
                 >
@@ -167,8 +171,8 @@ export default function Contact() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-6 py-3 border border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-[#1a1a1a] transition-all duration-300"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            whileHover={performance.animationLevel === 'full' ? { scale: 1.05 } : {}}
+                            whileTap={performance.animationLevel === 'full' ? { scale: 0.95 } : {}}
                         >
                             <MapPin className="w-5 h-5" />
                             Get Directions

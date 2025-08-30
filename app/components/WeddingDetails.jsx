@@ -6,6 +6,7 @@ import { Clock, MapPin, Calendar, Music, Utensils, Camera, Heart, Users, Sparkle
 import Image from 'next/image';
 import settings from '../config/settings';
 import Lightbox from './shared/Lightbox';
+import { usePerformance } from '../../hooks/usePerformance';
 
 export default function WeddingDetails() {
   const { wedding, venue, events, social, venueGallery } = settings;
@@ -14,6 +15,7 @@ export default function WeddingDetails() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [calendarUrl, setCalendarUrl] = useState('#');
   const [mounted, setMounted] = useState(false);
+  const performance = usePerformance();
   
   // Generate Google Calendar URL on client side only
   React.useEffect(() => {
@@ -175,29 +177,31 @@ export default function WeddingDetails() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_rgba(135,168,120,0.06)_0%,_transparent_40%)]"/>
         </div>
 
-        {/* Floating Particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full"
-              style={{
-                left: `${(i * 19) % 100}%`,
-                top: `${(i * 13) % 100}%`
-              }}
-              animate={{ 
-                y: [-20, -120],
-                opacity: [0, 1, 0]
-              }}
-              transition={{
-                duration: 12 + (i % 3) * 4,
-                repeat: Infinity,
-                delay: i * 0.7,
-                ease: "linear"
-              }}
-            />
-          ))}
-        </div>
+        {/* Floating Particles - reduced based on performance */}
+        {performance.particleCount > 0 && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(Math.min(performance.particleCount, 15))].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full will-change-transform"
+                style={{
+                  left: `${(i * 19) % 100}%`,
+                  top: `${(i * 13) % 100}%`
+                }}
+                animate={{ 
+                  y: [-20, -120],
+                  opacity: [0, 1, 0]
+                }}
+                transition={{
+                  duration: 12 + (i % 3) * 4,
+                  repeat: Infinity,
+                  delay: i * 0.7,
+                  ease: "linear"
+                }}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="max-w-7xl w-full mx-auto px-6 relative z-10">
           {/* Header */}
@@ -253,34 +257,25 @@ export default function WeddingDetails() {
                 viewport={{ once: true }}
               >
                 <div>
-                  <motion.p
-                    className="text-[#d4af37] text-sm tracking-[4px] uppercase mb-4"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.3 }}
-                    viewport={{ once: true }}
-                  >
-                    Our Venue
-                  </motion.p>
                   <motion.h3 
-                    className="font-playfair text-[clamp(3rem,7vw,5rem)] font-thin tracking-[0.02em] leading-tight"
+                    className="drop-shadow-[2px_2px_4px_black] font-playfair text-[clamp(3rem,7vw,5rem)] font-thin tracking-[0.02em] leading-tight"
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 1, delay: 0.5 }}
                     viewport={{ once: true }}
                   >
-                    <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#faf8f3] via-[#d4af19] to-[#faf8f3] bg-clip-text text-transparent">
                       {venue.name.toUpperCase()}
                     </span>
                   </motion.h3>
                   <motion.p 
-                    className="text-white/80 text-lg mt-4 max-w-2xl mx-auto px-6"
+                    className="text-white/80 text-xl mt-4 max-w-2xl mx-auto px-6"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 0.7 }}
                     viewport={{ once: true }}
                   >
-                    {venue.address.district}, {venue.address.city}
+                    The Venue of the Wedding
                   </motion.p>
                 </div>
               </motion.div>
@@ -318,8 +313,8 @@ export default function WeddingDetails() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-6 py-3 border border-[#d4af37]/50 text-[#d4af37] hover:bg-[#d4af37] hover:text-[#0a0a0a] transition-all duration-300 rounded-full"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                        whileHover={performance.animationLevel === 'full' ? { scale: 1.05 } : {}}
+                        whileTap={performance.animationLevel === 'full' ? { scale: 0.95 } : {}}
                       >
                         View on Map
                       </motion.a>
@@ -330,8 +325,8 @@ export default function WeddingDetails() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 px-6 py-3 border border-[#d4af37]/50 text-[#d4af37] hover:bg-[#d4af37] hover:text-[#0a0a0a] transition-all duration-300 rounded-full"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
+                          whileHover={performance.animationLevel === 'full' ? { scale: 1.05 } : {}}
+                          whileTap={performance.animationLevel === 'full' ? { scale: 0.95 } : {}}
                         >
                           Add to Calendar
                         </motion.a>

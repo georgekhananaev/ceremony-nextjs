@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import settings from '../config/settings';
+import { usePerformance } from '../../hooks/usePerformance';
 
 export default function LoveStory() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.3]);
+  const performance = usePerformance();
   
   // Map images to milestones
   const imageMap = {
@@ -39,36 +41,38 @@ export default function LoveStory() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(135,168,120,0.05)_0%,_transparent_60%)]"/>
       </div>
 
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full"
-            style={{
-              left: `${(i * 17) % 100}%`,
-              top: `${(i * 23) % 100}%`
-            }}
-            animate={{
-              y: [-20, -120],
-              opacity: [0, 1, 0]
-            }}
-            transition={{
-              duration: 10 + (i % 3) * 5,
-              repeat: Infinity,
-              delay: i * 0.5,
-              ease: "linear"
-            }}
-          />
-        ))}
-      </div>
+      {/* Floating Particles - reduced based on performance */}
+      {performance.particleCount > 0 && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(Math.min(performance.particleCount, 20))].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-[#d4af37]/20 rounded-full will-change-transform"
+              style={{
+                left: `${(i * 17) % 100}%`,
+                top: `${(i * 23) % 100}%`
+              }}
+              animate={{
+                y: [-20, -120],
+                opacity: [0, 1, 0]
+              }}
+              transition={{
+                duration: 10 + (i % 3) * 5,
+                repeat: Infinity,
+                delay: i * 0.5,
+                ease: "linear"
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Elegant Header */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          transition={{ duration: performance.animationLevel === 'none' ? 0 : 1.5, ease: "easeOut" }}
           viewport={{ once: true }}
           className="text-center mb-32"
         >
@@ -77,15 +81,15 @@ export default function LoveStory() {
             className="h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent mb-12"
             initial={{ width: 0 }}
             whileInView={{ width: "100%" }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: performance.animationLevel === 'none' ? 0 : 1.5, ease: "easeOut" }}
             viewport={{ once: true }}
           />
 
           <motion.h2
-            className="font-playfair text-[clamp(4rem,10vw,7rem)] font-thin leading-[0.9] tracking-[0.02em]"
-            initial={{ y: 50, opacity: 0 }}
+            className="font-playfair text-[clamp(4rem,10vw,7rem)] font-thin leading-[1.2] tracking-[0.02em]"
+            initial={{ y: performance.animationLevel === 'none' ? 0 : 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.2 }}
+            transition={{ duration: performance.animationLevel === 'none' ? 0 : 1.2, delay: performance.animationLevel === 'none' ? 0 : 0.2 }}
             viewport={{ once: true }}
           >
             <span className="block bg-gradient-to-r from-[#faf8f3] via-[#d4af37] to-[#faf8f3] bg-clip-text text-transparent">
@@ -106,35 +110,39 @@ export default function LoveStory() {
             A Collection of Moments
           </motion.p>
 
-          {/* Scroll Indicator */}
-          <motion.div
-            className="mt-16 flex justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-          >
+          {/* Scroll Indicator - simplified for mobile */}
+          {performance.animationLevel !== 'none' && (
             <motion.div
-              className="w-px h-12 bg-gradient-to-b from-[#d4af37]/30 to-transparent"
-              animate={{ scaleY: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          </motion.div>
+              className="mt-16 flex justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
+            >
+              <motion.div
+                className="w-px h-12 bg-gradient-to-b from-[#d4af37]/30 to-transparent will-change-transform"
+                animate={performance.animationLevel === 'full' ? { scaleY: [1, 1.2, 1] } : {}}
+                transition={performance.animationLevel === 'full' ? { duration: 2, repeat: Infinity } : {}}
+              />
+            </motion.div>
+          )}
         </motion.div>
 
         {/* Minimalist Timeline */}
         <div className="relative max-w-4xl mx-auto">
           {/* Central Golden Thread - Hidden on mobile, visible on desktop */}
-          <motion.div
-            className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-[0.5px] h-full"
-            style={{
-              background: "linear-gradient(to bottom, transparent, #d4af37, #d4af37, transparent)",
-              opacity: 0.2
-            }}
-            initial={{ height: 0 }}
-            whileInView={{ height: "100%" }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            viewport={{ once: true }}
-          />
+          {performance.animationLevel !== 'none' && (
+            <motion.div
+              className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-[0.5px] h-full"
+              style={{
+                background: "linear-gradient(to bottom, transparent, #d4af37, #d4af37, transparent)",
+                opacity: 0.2
+              }}
+              initial={{ height: 0 }}
+              whileInView={{ height: "100%" }}
+              transition={{ duration: performance.animationLevel === 'full' ? 2 : 0.5, ease: "easeOut" }}
+              viewport={{ once: true }}
+            />
+          )}
 
           {/* Milestone Cards */}
           <div className="space-y-32">
@@ -147,29 +155,29 @@ export default function LoveStory() {
                   key={milestone.id}
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  transition={{ duration: performance.animationLevel === 'none' ? 0 : 1.5, ease: "easeOut" }}
                   viewport={{ once: true, margin: "-100px" }}
                   className="relative"
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
+                  onMouseEnter={() => !performance.isMobile && setHoveredIndex(index)}
+                  onMouseLeave={() => !performance.isMobile && setHoveredIndex(null)}
                 >
                   {/* Content */}
                   <motion.div
                     className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ${
                       isEven ? '' : 'lg:[direction:rtl]'
                     }`}
-                    initial={{ x: isEven ? -50 : 50, opacity: 0 }}
+                    initial={{ x: performance.animationLevel === 'none' ? 0 : (isEven ? -50 : 50), opacity: 0 }}
                     whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.2 }}
+                    transition={{ duration: performance.animationLevel === 'none' ? 0 : 1, delay: performance.animationLevel === 'none' ? 0 : 0.2 }}
                     viewport={{ once: true }}
                   >
                     {/* Text Content */}
                     <div className={`${isEven ? 'lg:text-right' : 'lg:text-left lg:[direction:ltr]'} text-center lg:text-inherit`}>
                       <motion.div
-                        animate={{
+                        animate={performance.animationLevel === 'full' ? {
                           opacity: isHovered ? 1 : 0.7,
                           y: isHovered ? -5 : 0
-                        }}
+                        } : {}}
                         transition={{ duration: 0.3 }}
                       >
                         {/* Date */}
@@ -188,14 +196,16 @@ export default function LoveStory() {
                         </p>
 
                         {/* Decorative Element */}
-                        <div className={`mt-6 flex ${isEven ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
-                          <motion.div
-                            className="h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af37]/20 to-transparent"
-                            initial={{ width: 0 }}
-                            animate={{ width: isHovered ? 100 : 50 }}
-                            transition={{ duration: 0.5 }}
-                          />
-                        </div>
+                        {performance.animationLevel !== 'none' && (
+                          <div className={`mt-6 flex ${isEven ? 'lg:justify-end' : 'lg:justify-start'} justify-center`}>
+                            <motion.div
+                              className="h-[0.5px] bg-gradient-to-r from-transparent via-[#d4af37]/20 to-transparent"
+                              initial={{ width: 0 }}
+                              animate={{ width: performance.animationLevel === 'full' && isHovered ? 100 : 50 }}
+                              transition={{ duration: 0.5 }}
+                            />
+                          </div>
+                        )}
                       </motion.div>
                     </div>
 
@@ -209,7 +219,7 @@ export default function LoveStory() {
                               src={milestone.image}
                               alt={milestone.title}
                               fill
-                              className={`object-cover transition-all duration-700 ${isHovered ? 'scale-110' : 'scale-100'}`}
+                              className={`object-cover transition-all ${performance.animationLevel === 'full' ? 'duration-700' : 'duration-0'} ${performance.animationLevel === 'full' && isHovered ? 'scale-110' : 'scale-100'}`}
                               sizes="(max-width: 768px) 256px, 320px"
                             />
                           )}
@@ -218,8 +228,8 @@ export default function LoveStory() {
                         </div>
 
                         {/* Border Rings */}
-                        <div className={`absolute inset-0 rounded-full border-2 border-[#d4af37]/20 transition-all duration-500 ${isHovered ? 'scale-105 border-[#d4af37]/40' : 'scale-100'}`} />
-                        <div className={`absolute inset-2 rounded-full border border-[#faf8f3]/10 transition-all duration-700 ${isHovered ? 'scale-110 opacity-0' : 'scale-100 opacity-100'}`} />
+                        <div className={`absolute inset-0 rounded-full border-2 border-[#d4af37]/20 transition-all ${performance.animationLevel === 'full' ? 'duration-500' : 'duration-0'} ${performance.animationLevel === 'full' && isHovered ? 'scale-105 border-[#d4af37]/40' : 'scale-100'}`} />
+                        <div className={`absolute inset-2 rounded-full border border-[#faf8f3]/10 transition-all ${performance.animationLevel === 'full' ? 'duration-700' : 'duration-0'} ${performance.animationLevel === 'full' && isHovered ? 'scale-110 opacity-0' : 'scale-100 opacity-100'}`} />
 
                         {/* Number Overlay (subtle, on top of image) */}
                         {/*<div className={`absolute inset-0 flex items-end justify-center pb-8 pointer-events-none transition-opacity duration-500 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>*/}
