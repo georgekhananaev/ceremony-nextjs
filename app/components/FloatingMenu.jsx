@@ -116,12 +116,12 @@ export default function FloatingMenu() {
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: 300, opacity: 0 }}
                   transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  className="fixed top-0 right-0 h-full w-80 bg-[#1a1a1a]/95 backdrop-blur-md z-[95] border-l border-[#d4af37]/20"
+                  className="fixed top-0 right-0 h-full w-72 bg-[#1a1a1a]/95 backdrop-blur-md z-[95] border-l border-[#d4af37]/20"
                 >
                   {/* Header */}
                   <div className="p-6 border-b border-[#d4af37]/20">
                     <motion.h3 
-                      className="font-playfair text-2xl text-center"
+                      className="font-playfair text-2xl text-left"
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
@@ -131,7 +131,7 @@ export default function FloatingMenu() {
                       </span>
                     </motion.h3>
                     <motion.p 
-                      className="text-center text-xs text-[#d4af37]/60 mt-2 tracking-wider"
+                      className="text-left text-xs text-[#d4af37]/60 mt-2 tracking-wider"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
